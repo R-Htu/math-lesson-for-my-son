@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive beginner lessons about sets, Cartesian products, and functions.">
+  <title>Math Lessons · Set Theory</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --card: #20243a;
+      --card-soft: #191c2b;
+      --border: #2e3350;
+      --accent: #7c6aff;
+      --teal: #38e0b8;
+      --yellow: #f5c542;
+      --red: #ff6b7a;
+      --text: #e4e6f0;
+      --muted: #9095ae;
+      --code: #13151f;
+      --sidebar: 250px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 85% 5%, rgba(124, 106, 255, .09), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+    }
+
+    button { font: inherit; }
+    code, pre, .mono { font-family: "JetBrains Mono", monospace; }
+    code { color: var(--teal); }
+
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: var(--sidebar);
+      min-width: var(--sidebar);
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      padding: 25px 0;
+      background: rgba(26, 29, 39, .96);
+      border-right: 1px solid var(--border);
+      z-index: 20;
+    }
+
+    .brand {
+      padding: 0 22px 20px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--accent);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+
+    .brand span { color: var(--teal); }
+
+    .module-label {
+      padding: 12px 22px 7px;
+      color: #676d89;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      width: 100%;
+      display: flex;
+      gap: 11px;
+      align-items: center;
+      padding: 11px 20px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: .15s ease;
+    }
+
+    .nav-item:hover { color: var(--text); background: var(--card); }
+    .nav-item.active {
+      color: var(--accent);
+      background: var(--card);
+      border-left-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .nav-number {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 24px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font: 700 11px "JetBrains Mono", monospace;
+    }
+
+    .nav-item.active .nav-number {
+      color: #fff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .progress-wrap { padding: 22px 22px 0; }
+    .progress-copy {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .progress-track {
+      height: 5px;
+      overflow: hidden;
+      background: var(--code);
+      border-radius: 99px;
+    }
+    .progress-bar {
+      width: 16.667%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      border-radius: inherit;
+      transition: width .25s ease;
+    }
+
+    main {
+      width: 100%;
+      max-width: 920px;
+      padding: 50px 56px 80px;
+    }
+
+    .lesson { display: none; animation: appear .25s ease; }
+    .lesson.active { display: block; }
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lesson-tag {
+      margin-bottom: 9px;
+      color: var(--teal);
+      font: 700 11px "JetBrains Mono", monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 13px;
+      color: #f7f8ff;
+      font-size: clamp(30px, 5vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+    }
+
+    .lesson-intro {
+      max-width: 680px;
+      margin-bottom: 32px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .card {
+      position: relative;
+      padding: 25px;
+      margin-bottom: 22px;
+      background: linear-gradient(145deg, rgba(32, 36, 58, .98), rgba(28, 31, 49, .98));
+      border: 1px solid var(--border);
+      clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+    }
+
+    .card h2 {
+      margin-bottom: 15px;
+      color: var(--accent);
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .card h3 {
+      margin: 18px 0 10px;
+      color: var(--teal);
+      font-size: 14px;
+    }
+
+    .card p, .card li {
+      color: #bbc0d2;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .card p + p { margin-top: 9px; }
+    .card ul, .card ol { padding-left: 21px; margin-top: 10px; }
+    .card strong { color: #f1f3fb; }
+
+    .code-block {
+      margin: 15px 0;
+      padding: 17px 19px;
+      overflow-x: auto;
+      color: #d8dbeb;
+      background: var(--code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: 14px/1.75 "JetBrains Mono", monospace;
+      white-space: pre-wrap;
+    }
+
+    .math-line {
+      margin: 15px 0;
+      padding: 18px;
+      color: var(--teal);
+      background: var(--code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: 700 clamp(17px, 3vw, 24px) "JetBrains Mono", monospace;
+      text-align: center;
+    }
+
+    .note {
+      margin-top: 16px;
+      padding: 15px 17px;
+      background: rgba(124, 106, 255, .08);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 7px 7px 0;
+    }
+    .note.yellow { background: rgba(245, 197, 66, .07); border-color: var(--yellow); }
+    .note p { font-size: 13px; }
+
+    .compare-grid, .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mini-card {
+      padding: 15px;
+      background: var(--code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .mini-card .label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .mini-card.good { border-color: rgba(56, 224, 184, .38); }
+    .mini-card.bad { border-color: rgba(255, 107, 122, .38); }
+
+    .table-wrap { overflow-x: auto; margin-top: 14px; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      padding: 12px 14px;
+      color: var(--muted);
+      background: var(--surface);
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    td { padding: 13px 14px; border-top: 1px solid var(--border); color: #c5c9d8; }
+    .yes { color: var(--teal); font-weight: 700; }
+    .no { color: var(--red); font-weight: 700; }
+
+    .exercise-label {
+      margin: 30px 0 10px;
+      color: var(--yellow);
+      font: 700 11px "JetBrains Mono", monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .exercise {
+      overflow: hidden;
+      margin-bottom: 24px;
+      background: var(--card);
+      border: 1px solid rgba(245, 197, 66, .35);
+      border-radius: 10px;
+    }
+    .exercise-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      color: var(--muted);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font: 12px "JetBrains Mono", monospace;
+    }
+    .exercise-body { padding: 20px; }
+    .exercise-body > p { margin-bottom: 14px; color: #c6cad9; font-size: 14px; line-height: 1.65; }
+
+    .option {
+      width: 100%;
+      padding: 13px 15px;
+      color: var(--text);
+      background: var(--code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      transition: .15s ease;
+    }
+    .option:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .option.correct { color: var(--teal); border-color: var(--teal); background: rgba(56, 224, 184, .08); }
+    .option.wrong { color: var(--red); border-color: var(--red); background: rgba(255, 107, 122, .07); }
+    .option:disabled { cursor: default; transform: none; }
+
+    .feedback {
+      min-height: 22px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .feedback.success { color: var(--teal); }
+    .feedback.error { color: var(--red); }
+
+    .lab-controls { display: flex; flex-wrap: wrap; gap: 9px; margin: 13px 0 15px; }
+    .toggle {
+      padding: 8px 13px;
+      color: var(--muted);
+      background: var(--code);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      cursor: pointer;
+    }
+    .toggle.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+    .lab-output { min-height: 58px; }
+
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 17px;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: .15s ease;
+    }
+    .btn:hover { border-color: var(--accent); }
+    .btn.primary { color: white; background: var(--accent); border-color: var(--accent); }
+    .btn.primary:hover { background: #6e5ce8; }
+
+    .hamburger, .overlay { display: none; }
+
+    @media (max-width: 760px) {
+      .hamburger {
+        display: block;
+        position: fixed;
+        top: 13px;
+        left: 13px;
+        z-index: 40;
+        padding: 9px 12px;
+        color: #fff;
+        background: var(--accent);
+        border: 0;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .sidebar { position: fixed; left: calc(-1 * var(--sidebar) - 10px); transition: left .2s ease; }
+      .sidebar.open { left: 0; box-shadow: 15px 0 45px rgba(0, 0, 0, .35); }
+      .overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        background: rgba(5, 6, 10, .66);
+      }
+      .overlay.show { display: block; }
+      main { padding: 80px 20px 55px; }
+      .compare-grid, .choice-grid { grid-template-columns: 1fr; }
+      .lesson-nav { flex-direction: column; }
+      .lesson-nav .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <button class="hamburger" type="button" aria-controls="sidebar" aria-expanded="false" onclick="toggleSidebar()">☰ Lessons</button>
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">MATH<span>.learn</span></div>
+      <div class="module-label">Module 1 · Set Theory</div>
+      <nav aria-label="Set theory lessons">
+        <button class="nav-item active" type="button" onclick="showLesson(0)">
+          <span class="nav-number">01</span><span>What is a Set?</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(1)">
+          <span class="nav-number">02</span><span>Subsets</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(2)">
+          <span class="nav-number">03</span><span>Power Sets</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(3)">
+          <span class="nav-number">04</span><span>Set Operations</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(4)">
+          <span class="nav-number">05</span><span>Cartesian Product</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(5)">
+          <span class="nav-number">06</span><span>Functions</span>
+        </button>
+      </nav>
+      <div class="progress-wrap">
+        <div class="progress-copy"><span>Course progress</span><span id="progressText">1 / 6</span></div>
+        <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="lesson active" id="lesson-0">
+        <div class="lesson-tag">Lesson 1 · Foundations</div>
+        <h1>What is a Set?</h1>
+        <p class="lesson-intro">A set is a collection of distinct things. Those things can be numbers, words, objects, or even other sets.</p>
+
+        <article class="card">
+          <h2>📦 Collections and elements</h2>
+          <p>Every item inside a set is called an <strong>element</strong>. We write elements between curly braces.</p>
+          <div class="code-block">Fruits = {Apple, Banana, Orange}
+Numbers = {1, 2, 3, 4, 5}</div>
+          <p>The set <code>Fruits</code> has three elements. The symbol <code>∈</code> means “is an element of.”</p>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">True</span>
+              <code>Apple ∈ Fruits</code>
+            </div>
+            <div class="mini-card bad">
+              <span class="label">False</span>
+              <code>Car ∈ Fruits</code>
+            </div>
+          </div>
+          <div class="note"><p><strong>Not inside?</strong> Use <code>∉</code>. For example, <code>Car ∉ Fruits</code>.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>⚡ Four rules to remember</h2>
+          <h3>1. Sets usually use capital letters</h3>
+          <div class="code-block">A = {1, 2, 3}
+B = {Cat, Dog}</div>
+          <h3>2. An empty set contains nothing</h3>
+          <div class="math-line">∅ = { }</div>
+          <h3>3. Order does not matter</h3>
+          <div class="math-line">{1, 2, 3} = {3, 1, 2}</div>
+          <h3>4. Repeated elements count only once</h3>
+          <div class="math-line">{1, 1, 2, 2, 3} = {1, 2, 3}</div>
+        </article>
+
+        <article class="card">
+          <h2>📏 Size of a set</h2>
+          <p>The number of elements in a set is its <strong>cardinality</strong>. We write it with vertical bars.</p>
+          <div class="code-block">A = {Dog, Cat, Bird}
+|A| = 3</div>
+        </article>
+
+        <div class="exercise-label">Quick check · 1 of 3</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>A = {2, 4, 6, 8}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>Which statement is true?</p>
+            <div class="choice-grid">
+              <button class="option" type="button" data-correct="true">4 ∈ A</button>
+              <button class="option" type="button">5 ∈ A</button>
+              <button class="option" type="button">8 ∉ A</button>
+              <button class="option" type="button">|A| = 5</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="lesson-nav">
+          <span></span>
+          <button class="btn primary" type="button" onclick="showLesson(1)">Next: Subsets →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-1">
+        <div class="lesson-tag">Lesson 2 · Relationships</div>
+        <h1>Subsets</h1>
+        <p class="lesson-intro">A set is a subset of another set when every one of its elements also appears in the other set.</p>
+
+        <article class="card">
+          <h2>🗂 A smaller set inside a bigger set</h2>
+          <div class="code-block">Animals = {Cat, Dog, Bird, Fish}
+Pets = {Cat, Dog}</div>
+          <p>Every element of <code>Pets</code> appears in <code>Animals</code>, so we can write:</p>
+          <div class="math-line">Pets ⊆ Animals</div>
+          <p>Read <code>⊆</code> as “is a subset of.” If even one element is missing from the larger set, it is <strong>not</strong> a subset.</p>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">Subset</span>
+              <code>{2, 4} ⊆ {1, 2, 3, 4}</code>
+            </div>
+            <div class="mini-card bad">
+              <span class="label">Not a subset</span>
+              <code>{2, 5} ⊄ {1, 2, 3, 4}</code>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🧠 The subset test</h2>
+          <p>Look at each element in the smaller set and ask: <strong>Does it also appear in the bigger set?</strong></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Candidate</th><th>Subset of A?</th><th>Reason</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">{2, 5}</td><td class="yes">Yes</td><td>Both are in A</td></tr>
+                <tr><td class="mono">{1, 6}</td><td class="no">No</td><td>6 is missing</td></tr>
+                <tr><td class="mono">{ }</td><td class="yes">Yes</td><td>The empty set is always a subset</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note yellow"><p>Here, <code>A = {1, 2, 3, 4, 5}</code>.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Two special rules</h2>
+          <h3>Every set is a subset of itself</h3>
+          <div class="math-line">A ⊆ A</div>
+          <h3>The empty set is a subset of every set</h3>
+          <div class="math-line">∅ ⊆ A</div>
+          <p>There are no elements in <code>∅</code> that could break the subset rule.</p>
+        </article>
+
+        <div class="exercise-label">Quick check · 2 of 3</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>X = {A, B, C, D}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>Which set is <strong>not</strong> a subset of X?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">{A, C}</button>
+              <button class="option" type="button" data-correct="true">{B, E}</button>
+              <button class="option" type="button">{ }</button>
+              <button class="option" type="button">{D}</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(0)">← Sets</button>
+          <button class="btn primary" type="button" onclick="showLesson(2)">Next: Power Sets →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-2">
+        <div class="lesson-tag">Lesson 3 · Combinations</div>
+        <h1>Power Sets</h1>
+        <p class="lesson-intro">The power set of X is the set of every possible subset of X—including the empty set and X itself.</p>
+
+        <article class="card">
+          <h2>⚙️ A set made of sets</h2>
+          <p>Suppose <code>X = {A, B}</code>. Its power set is written <code>𝒫(X)</code>.</p>
+          <div class="code-block">𝒫(X) = {
+  { },
+  {A},
+  {B},
+  {A, B}
+}</div>
+          <div class="note"><p>A normal set contains elements. A <strong>power set</strong> contains entire subsets as its elements.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🔢 How many subsets?</h2>
+          <p>A set with <code>n</code> elements always has <code>2ⁿ</code> subsets. Each element has two choices: included or not included.</p>
+          <div class="math-line">|𝒫(X)| = 2ⁿ</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Elements (n)</th><th>Calculation</th><th>Total subsets</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td class="mono">2¹</td><td class="yes">2</td></tr>
+                <tr><td>2</td><td class="mono">2²</td><td class="yes">4</td></tr>
+                <tr><td>3</td><td class="mono">2³</td><td class="yes">8</td></tr>
+                <tr><td>4</td><td class="mono">2⁴</td><td class="yes">16</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🧪 Build a power set</h2>
+          <p>Turn the elements on or off. The lab lists every possible subset of your chosen set.</p>
+          <div class="lab-controls" aria-label="Choose elements">
+            <button class="toggle on" type="button" data-value="A">A</button>
+            <button class="toggle on" type="button" data-value="B">B</button>
+            <button class="toggle" type="button" data-value="C">C</button>
+          </div>
+          <div class="code-block lab-output" id="labOutput" aria-live="polite"></div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 Why power sets matter</h2>
+          <p>In probability, <code>X</code> is the sample space of all outcomes. An event is a subset of X, so it is also one element of <code>𝒫(X)</code>.</p>
+          <div class="code-block">X = {Sunny, Rainy, Snowy}
+U = {Rainy, Snowy}
+
+U ⊆ X  and  U ∈ 𝒫(X)</div>
+        </article>
+
+        <div class="exercise-label">Quick check · 3 of 4</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>X = {Cat, Dog}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>Which set is <strong>not</strong> in <code>𝒫(X)</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">{ }</button>
+              <button class="option" type="button">{Cat}</button>
+              <button class="option" type="button">{Cat, Dog}</button>
+              <button class="option" type="button" data-correct="true">{Cat, Dog, Bird}</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(1)">← Subsets</button>
+          <button class="btn primary" type="button" onclick="showLesson(3)">Next: Set Operations →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-3">
+        <div class="lesson-tag">Lesson 4 · Combining Sets</div>
+        <h1>Set Operations</h1>
+        <p class="lesson-intro">Set operations let us combine sets, find what they share, or remove elements. The three essentials are union, intersection, and difference.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Combine sets using <strong>union</strong> (<code>∪</code>)</li>
+            <li>Find common elements using <strong>intersection</strong> (<code>∩</code>)</li>
+            <li>Remove elements using <strong>difference</strong> (<code>−</code> or <code>\</code>)</li>
+            <li>Solve simple set-operation problems</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>➕ 1. Union (∪)</h2>
+          <p>The <strong>union</strong> combines every element from both sets. Think: <strong>“Everything in A or B.”</strong></p>
+          <div class="code-block">A = {1, 2, 3}
+B = {3, 4, 5}</div>
+          <div class="math-line">A ∪ B = {1, 2, 3, 4, 5}</div>
+          <p>The number <code>3</code> appears only once because a set never counts duplicate elements.</p>
+          <div class="compare-grid">
+            <div class="mini-card">
+              <span class="label">Start</span>
+              <code>A: 1 2 3<br>B: 3 4 5</code>
+            </div>
+            <div class="mini-card good">
+              <span class="label">Combine</span>
+              <code>A ∪ B: 1 2 3 4 5</code>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🎯 2. Intersection (∩)</h2>
+          <p>The <strong>intersection</strong> contains only elements that appear in both sets. Think: <strong>“Common elements.”</strong></p>
+          <div class="code-block">A = {1, 2, 3}
+B = {3, 4, 5}</div>
+          <div class="math-line">A ∩ B = {3}</div>
+          <p>Only <code>3</code> belongs to both A and B.</p>
+          <div class="compare-grid">
+            <div class="mini-card">
+              <span class="label">Compare</span>
+              <code>A: 1 2 [3]<br>B: [3] 4 5</code>
+            </div>
+            <div class="mini-card good">
+              <span class="label">Keep common items</span>
+              <code>A ∩ B: 3</code>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>➖ 3. Difference (−)</h2>
+          <p>The <strong>difference</strong> starts with one set and removes every element found in the other set.</p>
+          <div class="code-block">A = {1, 2, 3, 4}
+B = {3, 4, 5}</div>
+          <div class="math-line">A − B = {1, 2}</div>
+          <p>Start with A, then remove <code>3</code> and <code>4</code> because they also occur in B.</p>
+          <div class="math-line">B − A = {5}</div>
+          <div class="note yellow"><p><strong>Direction matters:</strong> <code>A − B</code> and <code>B − A</code> are usually different.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🍎 One example, three operations</h2>
+          <div class="code-block">A = {Apple, Banana, Mango}
+B = {Banana, Orange}</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Operation</th><th>Meaning</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">A ∪ B</td><td>Everything</td><td class="mono">{Apple, Banana, Mango, Orange}</td></tr>
+                <tr><td class="mono">A ∩ B</td><td>Common elements</td><td class="mono">{Banana}</td></tr>
+                <tr><td class="mono">A − B</td><td>In A, but not B</td><td class="mono">{Apple, Mango}</td></tr>
+                <tr><td class="mono">B − A</td><td>In B, but not A</td><td class="mono">{Orange}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🌟 Memory trick</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Symbol</th><th>Operation</th><th>Remember</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">∪</td><td>Union</td><td>Combine everything</td></tr>
+                <tr><td class="mono">∩</td><td>Intersection</td><td>Common elements only</td></tr>
+                <tr><td class="mono">−</td><td>Difference</td><td>Start on the left, remove the right</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked practice</h2>
+          <p>Let <code>A = {1, 2, 3, 4}</code> and <code>B = {3, 4, 5, 6}</code>.</p>
+          <div class="code-block">A ∪ B = {1, 2, 3, 4, 5, 6}
+A ∩ B = {3, 4}
+A − B = {1, 2}
+B − A = {5, 6}</div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 Why this matters</h2>
+          <p>Set operations appear throughout probability. If two events U and V do not overlap, then their intersection is empty:</p>
+          <div class="math-line">U ∩ V = ∅</div>
+          <p>The probability of either event occurring is then the sum of their individual probabilities:</p>
+          <div class="math-line">P(U ∪ V) = P(U) + P(V)</div>
+          <p>Union tells us <strong>either event</strong>; intersection tells us whether the events <strong>overlap</strong>.</p>
+        </article>
+
+        <div class="exercise-label">Quick check · 4 of 5</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>A = {1, 2, 3, 4} · B = {3, 4, 5, 6}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>What is <code>B − A</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">{1, 2}</button>
+              <button class="option" type="button">{3, 4}</button>
+              <button class="option" type="button" data-correct="true">{5, 6}</button>
+              <button class="option" type="button">{1, 2, 5, 6}</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(2)">← Power Sets</button>
+          <button class="btn primary" type="button" onclick="showLesson(4)">Next: Cartesian Product →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-4">
+        <div class="lesson-tag">Lesson 5 · Pairing Sets</div>
+        <h1>Cartesian Product</h1>
+        <p class="lesson-intro">A Cartesian product pairs every element of one set with every element of another set. These ordered pairs are the bridge from sets to functions.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Explain what a <strong>Cartesian product</strong> is</li>
+            <li>Write and interpret <strong>ordered pairs</strong></li>
+            <li>Find the Cartesian product of two sets</li>
+            <li>Calculate the number of ordered pairs</li>
+            <li>Explain why <code>A × B</code> is generally different from <code>B × A</code></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>✖️ 1. What is a Cartesian product?</h2>
+          <p>The Cartesian product of A and B is the set of <strong>all possible ordered pairs</strong> whose first value comes from A and second value comes from B.</p>
+          <div class="math-line">A × B</div>
+          <p>Read this as <strong>“A cross B.”</strong> Pair every element of A with every element of B.</p>
+          <div class="note"><p>Imagine a multiplication table: every row meets every column, and each meeting creates one ordered pair.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>📍 2. Ordered pairs</h2>
+          <p>An ordered pair has two positions. The first value comes from A; the second comes from B.</p>
+          <div class="math-line">(1, A)</div>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">First from A, second from B</span>
+              <code>(1, A)</code>
+            </div>
+            <div class="mini-card bad">
+              <span class="label">Different order</span>
+              <code>(A, 1)</code>
+            </div>
+          </div>
+          <div class="note yellow"><p><strong>Order matters:</strong> <code>(1, A) ≠ (A, 1)</code>.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🧩 3. Pair every element</h2>
+          <div class="code-block">A = {1, 2}
+B = {A, B}</div>
+          <p>Start with <code>1</code> and pair it with both elements of B. Then repeat with <code>2</code>.</p>
+          <div class="code-block">A × B = {
+  (1, A),
+  (1, B),
+  (2, A),
+  (2, B)
+}</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>From A</th><th>From B</th><th>Ordered pair</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">1</td><td class="mono">A</td><td class="mono">(1, A)</td></tr>
+                <tr><td class="mono">1</td><td class="mono">B</td><td class="mono">(1, B)</td></tr>
+                <tr><td class="mono">2</td><td class="mono">A</td><td class="mono">(2, A)</td></tr>
+                <tr><td class="mono">2</td><td class="mono">B</td><td class="mono">(2, B)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🎨 4. Colors and shapes</h2>
+          <div class="code-block">Colors = {Red, Blue}
+Shapes = {Circle, Square}</div>
+          <div class="code-block">Colors × Shapes = {
+  (Red, Circle),
+  (Red, Square),
+  (Blue, Circle),
+  (Blue, Square)
+}</div>
+          <p>Every color is paired with every shape, so every possible combination appears exactly once.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔢 5. Number of ordered pairs</h2>
+          <p>Multiply the size of A by the size of B. If A has two elements and B has three, the product contains six ordered pairs.</p>
+          <div class="math-line">|A × B| = |A| × |B|</div>
+          <div class="code-block">|A| = 2
+|B| = 3
+
+|A × B| = 2 × 3 = 6</div>
+          <p>For <code>A = {1, 2, 3}</code> and <code>B = {X, Y}</code>, there are <code>3 × 2 = 6</code> ordered pairs.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔁 6. A × B is not B × A</h2>
+          <div class="code-block">A = {1, 2}
+B = {X, Y}
+
+A × B = {(1, X), (1, Y), (2, X), (2, Y)}
+B × A = {(X, 1), (X, 2), (Y, 1), (Y, 2)}</div>
+          <div class="math-line">A × B ≠ B × A</div>
+          <p>The two products have the same <strong>number</strong> of pairs, but the pairs themselves are different because their order is reversed.</p>
+        </article>
+
+        <article class="card">
+          <h2>☕ 7. A real-life example</h2>
+          <div class="code-block">Drinks = {Tea, Coffee}
+Desserts = {Cake, Ice Cream}</div>
+          <p>Every possible drink-and-dessert meal is:</p>
+          <div class="code-block">Drinks × Desserts = {
+  (Tea, Cake),
+  (Tea, Ice Cream),
+  (Coffee, Cake),
+  (Coffee, Ice Cream)
+}</div>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked practice</h2>
+          <p>Let <code>A = {1, 2}</code> and <code>B = {X, Y, Z}</code>.</p>
+          <div class="code-block">A × B = {
+  (1, X), (1, Y), (1, Z),
+  (2, X), (2, Y), (2, Z)
+}
+
+|A × B| = 2 × 3 = 6
+
+A × B ≠ B × A</div>
+        </article>
+
+        <article class="card">
+          <h2>🌟 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Notation</th><th>Meaning</th><th>Remember</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">A × B</td><td>Cartesian product</td><td>Pair every A with every B</td></tr>
+                <tr><td class="mono">(a, b)</td><td>Ordered pair</td><td>First from A, second from B</td></tr>
+                <tr><td class="mono">|A × B|</td><td>Number of pairs</td><td class="mono">|A| × |B|</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 5 of 6</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>A = {Cat, Dog} · B = {1, 2}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>Which ordered pair is <strong>not</strong> in <code>A × B</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">(Cat, 1)</button>
+              <button class="option" type="button">(Cat, 2)</button>
+              <button class="option" type="button">(Dog, 1)</button>
+              <button class="option" type="button" data-correct="true">(1, Cat)</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Functions (Mappings)</h2>
+          <p>A function is a special rule that maps elements from one set to another:</p>
+          <div class="math-line">f : A → B</div>
+          <p>Cartesian products help us describe these input-output relationships precisely.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(3)">← Set Operations</button>
+          <button class="btn primary" type="button" onclick="showLesson(5)">Next: Functions →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-5">
+        <div class="lesson-tag">Lesson 6 · Mappings</div>
+        <h1>Functions</h1>
+        <p class="lesson-intro">A function is a rule that takes an input and produces exactly one output. Functions connect sets to probability, calculus, machine learning, and quantum mechanics.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Explain what a <strong>function</strong> is</li>
+            <li>Identify the <strong>domain</strong> and <strong>codomain</strong></li>
+            <li>Read function notation</li>
+            <li>Evaluate a function for a given input</li>
+            <li>Check that every input has exactly one output</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>⚙️ 1. What is a function?</h2>
+          <p>A function is a rule that maps each input to <strong>exactly one output</strong>.</p>
+          <div class="math-line">f : A → B</div>
+          <p>Read this as <strong>“f is a function from A to B.”</strong></p>
+          <div class="compare-grid">
+            <div class="mini-card">
+              <span class="label">Domain</span>
+              <code>A = allowed inputs</code>
+            </div>
+            <div class="mini-card">
+              <span class="label">Codomain</span>
+              <code>B = possible outputs</code>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🗺️ 2. A simple mapping</h2>
+          <div class="code-block">A = {1, 2, 3}
+B = {A, B, C}
+
+f(1) = A
+f(2) = B
+f(3) = C</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Domain input</th><th>Mapping</th><th>Codomain output</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">1</td><td>→</td><td class="mono">A</td></tr>
+                <tr><td class="mono">2</td><td>→</td><td class="mono">B</td></tr>
+                <tr><td class="mono">3</td><td>→</td><td class="mono">C</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Every number points to exactly one letter, so this is a valid function.</p>
+        </article>
+
+        <article class="card">
+          <h2>📥 3. Domain and codomain</h2>
+          <h3>Domain: all allowed inputs</h3>
+          <div class="code-block">A = {1, 2, 3}</div>
+          <p>The function accepts only inputs from this domain.</p>
+          <h3>Codomain: all possible outputs</h3>
+          <div class="code-block">B = {Red, Blue, Green}</div>
+          <p>Every output produced by the function must belong to this codomain.</p>
+        </article>
+
+        <article class="card">
+          <h2>🧮 4. Reading function notation</h2>
+          <div class="math-line">f(x) = x + 1</div>
+          <p>This rule means: take the input <code>x</code> and add one.</p>
+          <div class="code-block">f(1) = 1 + 1 = 2
+f(3) = 3 + 1 = 4
+f(10) = 10 + 1 = 11</div>
+        </article>
+
+        <article class="card">
+          <h2>☝️ 5. One input, exactly one output</h2>
+          <div class="compare-grid">
+            <div class="mini-card bad">
+              <span class="label">Not a function</span>
+              <code>1 → A<br>1 → B</code>
+              <p>Input 1 has two outputs.</p>
+            </div>
+            <div class="mini-card good">
+              <span class="label">Valid function</span>
+              <code>1 → A<br>2 → A<br>3 → A</code>
+              <p>Different inputs may share one output.</p>
+            </div>
+          </div>
+          <div class="note yellow"><p>The rule restricts each <strong>input</strong> to one output. It does not require different outputs.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>👥 6. Functions in everyday life</h2>
+          <h3>Students mapped to ages</h3>
+          <div class="code-block">Alice   → 18
+Bob     → 19
+Charlie → 18</div>
+          <p>This is valid: each student has one age, and multiple students may share the same age.</p>
+          <h3>Countries mapped to capitals</h3>
+          <div class="code-block">Japan  → Tokyo
+France → Paris
+Brazil → Brasília</div>
+          <p>Each country maps to exactly one capital.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔍 7. Evaluating functions</h2>
+          <p>Substitute the given input wherever you see <code>x</code>, then simplify.</p>
+          <div class="code-block">f(x) = 2x
+f(4) = 2(4) = 8
+
+g(x) = x²
+g(5) = 5² = 25</div>
+          <div class="note"><p><strong>Evaluate</strong> means “find the output for this input.”</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🎰 Function machine</h2>
+          <p>For <code>f(x) = 2x + 1</code>, choose an input and watch the rule produce exactly one output.</p>
+          <div class="choice-grid">
+            <button class="option" type="button" data-function-input="2">Try x = 2</button>
+            <button class="option" type="button" data-function-input="5">Try x = 5</button>
+            <button class="option" type="button" data-function-input="10">Try x = 10</button>
+          </div>
+          <div class="math-line" id="functionOutput" aria-live="polite">Choose an input</div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 8. Why functions matter</h2>
+          <p>A probability function can map every outcome to a number from 0 to 1:</p>
+          <div class="math-line">p : X → [0, 1]</div>
+          <div class="code-block">X = {Heads, Tails}
+
+p(Heads) = 0.5
+p(Tails) = 0.5</div>
+          <p>Here, X is the domain of outcomes and <code>[0, 1]</code> is the codomain of possible probability values.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌟 Memory trick</h2>
+          <p>Think of a vending machine: one input goes through a rule and produces one result.</p>
+          <div class="math-line">Input → Function → Output</div>
+          <div class="code-block">3 → f(x) = x + 2 → 5</div>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked practice</h2>
+          <div class="code-block">f(x) = x + 5
+
+f(1)  = 6
+f(4)  = 9
+f(10) = 15
+
+g(x) = 3x
+g(2) = 6</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td>Function</td><td>A rule mapping each input to exactly one output</td></tr>
+                <tr><td>Domain</td><td>The set of all allowed inputs</td></tr>
+                <tr><td>Codomain</td><td>The set of all possible outputs</td></tr>
+                <tr><td class="mono">f(x)</td><td>The output of f for input x</td></tr>
+                <tr><td class="mono">f : A → B</td><td>A function from set A to set B</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 6 of 6</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>f(x) = 2x + 1</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>What is <code>f(5)</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">7</button>
+              <button class="option" type="button">10</button>
+              <button class="option" type="button" data-correct="true">11</button>
+              <button class="option" type="button">12</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Relations</h2>
+          <p>Relations describe connections between sets. A function is a special kind of relation in which every input has exactly one output.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(4)">← Cartesian Product</button>
+          <button class="btn primary" type="button" onclick="showLesson(0)">Review from the start ↻</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const lessons = [...document.querySelectorAll(".lesson")];
+    const navItems = [...document.querySelectorAll(".nav-item")];
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const hamburger = document.querySelector(".hamburger");
+
+    function showLesson(index) {
+      lessons.forEach((lesson, i) => lesson.classList.toggle("active", i === index));
+      navItems.forEach((item, i) => item.classList.toggle("active", i === index));
+      document.getElementById("progressText").textContent = `${index + 1} / ${lessons.length}`;
+      document.getElementById("progressBar").style.width = `${((index + 1) / lessons.length) * 100}%`;
+      document.title = `${lessons[index].querySelector("h1").textContent} · Math Lessons`;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (sidebar.classList.contains("open")) toggleSidebar();
+    }
+
+    function toggleSidebar() {
+      const isOpen = sidebar.classList.toggle("open");
+      overlay.classList.toggle("show", isOpen);
+      hamburger.setAttribute("aria-expanded", String(isOpen));
+    }
+
+    document.querySelectorAll("[data-quiz]").forEach((quiz) => {
+      const options = [...quiz.querySelectorAll(".option")];
+      const feedback = quiz.querySelector(".feedback");
+
+      options.forEach((option) => {
+        option.addEventListener("click", () => {
+          const correct = option.dataset.correct === "true";
+          options.forEach((button) => {
+            button.disabled = true;
+            if (button.dataset.correct === "true") button.classList.add("correct");
+          });
+
+          if (correct) {
+            feedback.textContent = "Correct! Nice work.";
+            feedback.className = "feedback success";
+          } else {
+            option.classList.add("wrong");
+            feedback.textContent = "Not quite. The correct answer is highlighted—review the rule above.";
+            feedback.className = "feedback error";
+          }
+        });
+      });
+    });
+
+    function renderPowerSet() {
+      const active = [...document.querySelectorAll(".toggle.on")].map((button) => button.dataset.value);
+      const subsets = [];
+      const total = 2 ** active.length;
+
+      for (let mask = 0; mask < total; mask++) {
+        const subset = active.filter((_, index) => mask & (1 << index));
+        subsets.push(`{${subset.length ? subset.join(", ") : " "}}`);
+      }
+
+      const setName = `{${active.length ? active.join(", ") : " "}}`;
+      document.getElementById("labOutput").textContent =
+        `X = ${setName}\n𝒫(X) = { ${subsets.join(", ")} }\nTotal: ${total} subset${total === 1 ? "" : "s"}`;
+    }
+
+    document.querySelectorAll(".toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        button.classList.toggle("on");
+        renderPowerSet();
+      });
+    });
+
+    document.querySelectorAll("[data-function-input]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = Number(button.dataset.functionInput);
+        const output = (2 * input) + 1;
+        document.getElementById("functionOutput").textContent =
+          `f(${input}) = 2(${input}) + 1 = ${output}`;
+      });
+    });
+
+    renderPowerSet();
+  </script>
+</body>
+</html>
