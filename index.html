@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive beginner lessons about sets, Cartesian products, and functions.">
+  <meta name="description" content="Interactive lessons connecting set theory, probability, random variables, expectation, variance, and finite classical physics.">
   <title>Math Lessons · Set Theory</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
@@ -132,7 +132,7 @@
       border-radius: 99px;
     }
     .progress-bar {
-      width: 16.667%;
+      width: 6.667%;
       height: 100%;
       background: linear-gradient(90deg, var(--accent), var(--teal));
       border-radius: inherit;
@@ -430,9 +430,36 @@
         <button class="nav-item" type="button" onclick="showLesson(5)">
           <span class="nav-number">06</span><span>Functions</span>
         </button>
+        <button class="nav-item" type="button" onclick="showLesson(6)">
+          <span class="nav-number">07</span><span>Relations</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(7)">
+          <span class="nav-number">08</span><span>Relation Properties</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(8)">
+          <span class="nav-number">09</span><span>Classes &amp; Partitions</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(9)">
+          <span class="nav-number">10</span><span>Finite Phase Space</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(10)">
+          <span class="nav-number">11</span><span>Probability Spaces</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(11)">
+          <span class="nav-number">12</span><span>Probability Rules</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(12)">
+          <span class="nav-number">13</span><span>Independence</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(13)">
+          <span class="nav-number">14</span><span>Random Variables</span>
+        </button>
+        <button class="nav-item" type="button" onclick="showLesson(14)">
+          <span class="nav-number">15</span><span>Expectation &amp; Variance</span>
+        </button>
       </nav>
       <div class="progress-wrap">
-        <div class="progress-copy"><span>Course progress</span><span id="progressText">1 / 6</span></div>
+        <div class="progress-copy"><span>Course progress</span><span id="progressText">1 / 15</span></div>
         <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
       </div>
     </aside>
@@ -1125,7 +1152,7 @@ g(2) = 6</div>
           </div>
         </article>
 
-        <div class="exercise-label">Mini quiz · 6 of 6</div>
+        <div class="exercise-label">Mini quiz · 6 of 7</div>
         <div class="exercise">
           <div class="exercise-head"><span>f(x) = 2x + 1</span><span>Choose one</span></div>
           <div class="exercise-body" data-quiz>
@@ -1147,6 +1174,1869 @@ g(2) = 6</div>
 
         <div class="lesson-nav">
           <button class="btn" type="button" onclick="showLesson(4)">← Cartesian Product</button>
+          <button class="btn primary" type="button" onclick="showLesson(6)">Next: Relations →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-6">
+        <div class="lesson-tag">Lesson 7 · Connections</div>
+        <h1>Relations</h1>
+        <p class="lesson-intro">A relation describes connections between elements of sets. Functions are special relations with one strict rule: every input must have exactly one output.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Explain what a <strong>relation</strong> is</li>
+            <li>Interpret relations as sets of ordered pairs</li>
+            <li>Create relations between two sets</li>
+            <li>Distinguish a relation from a function</li>
+            <li>Recognize that every function is a special relation</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>🔗 1. What is a relation?</h2>
+          <p>A relation records which elements of one set are connected to elements of another set.</p>
+          <div class="code-block">A = {1, 2, 3}
+B = {A, B, C}
+
+1 → A
+2 → B
+3 → C</div>
+          <p>Write each connection as an ordered pair, then collect the pairs in a set:</p>
+          <div class="math-line">R = {(1, A), (2, B), (3, C)}</div>
+        </article>
+
+        <article class="card">
+          <h2>📍 2. Ordered pairs still have direction</h2>
+          <p>In <code>(a, b)</code>, the first element is <code>a</code> and the second is <code>b</code>. Swapping the positions changes the pair.</p>
+          <div class="math-line">(1, 2) ≠ (2, 1)</div>
+          <div class="note yellow"><p>Think <code>(first, second)</code>. Relations preserve this order.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>✖️ 3. Relations come from Cartesian products</h2>
+          <div class="code-block">A = {1, 2}
+B = {a, b}
+
+A × B = {(1, a), (1, b), (2, a), (2, b)}</div>
+          <p>A relation from A to B selects any collection of these possible ordered pairs.</p>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">One relation</span>
+              <code>R₁ = {(1, a), (2, b)}</code>
+            </div>
+            <div class="mini-card good">
+              <span class="label">Another relation</span>
+              <code>R₂ = {(1, a), (1, b), (2, a)}</code>
+            </div>
+          </div>
+          <div class="math-line">R ⊆ A × B</div>
+          <p><strong>Every subset of A × B is a relation from A to B.</strong></p>
+        </article>
+
+        <article class="card">
+          <h2>🗺️ 4. Visualizing a relation</h2>
+          <div class="code-block">A = {1, 2, 3}
+B = {a, b, c}
+R = {(1, a), (2, b), (3, a)}</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Input from A</th><th>Connection</th><th>Output in B</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">1</td><td>→</td><td class="mono">a</td></tr>
+                <tr><td class="mono">2</td><td>→</td><td class="mono">b</td></tr>
+                <tr><td class="mono">3</td><td>→</td><td class="mono">a</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Different inputs may connect to the same output. That is completely valid.</p>
+        </article>
+
+        <article class="card">
+          <h2>🧭 5. Relations are flexible</h2>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">An input may have no output</span>
+              <code>R = {(1, a), (2, b)}</code>
+              <p>Input 3 is unconnected. This is still a relation.</p>
+            </div>
+            <div class="mini-card good">
+              <span class="label">An input may have many outputs</span>
+              <code>R = {(1, a), (1, b), (2, c)}</code>
+              <p>Input 1 has two connections. Still a relation.</p>
+            </div>
+          </div>
+          <div class="note yellow"><p>Both examples fail the stricter function rule, but neither breaks the definition of a relation.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>⚖️ 6. Relation versus function</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Rule</th><th>Relation</th><th>Function</th></tr></thead>
+              <tbody>
+                <tr><td>An input has no output</td><td class="yes">Allowed</td><td class="no">Not allowed</td></tr>
+                <tr><td>An input has one output</td><td class="yes">Allowed</td><td class="yes">Required</td></tr>
+                <tr><td>An input has multiple outputs</td><td class="yes">Allowed</td><td class="no">Not allowed</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="math-line">Every function is a relation.</div>
+          <div class="math-line">Not every relation is a function.</div>
+        </article>
+
+        <article class="card">
+          <h2>🔍 7. Classify these relations</h2>
+          <p>Let <code>A = {1, 2, 3}</code> and <code>B = {a, b, c}</code>.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Relation</th><th>Relation?</th><th>Function A → B?</th><th>Reason</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">R₁ = {(1,a), (2,b), (3,c)}</td><td class="yes">Yes</td><td class="yes">Yes</td><td>Every input has one output</td></tr>
+                <tr><td class="mono">R₂ = {(1,a), (1,b), (2,c)}</td><td class="yes">Yes</td><td class="no">No</td><td>Input 1 has two outputs</td></tr>
+                <tr><td class="mono">R₃ = {(1,a), (2,b)}</td><td class="yes">Yes</td><td class="no">No</td><td>Input 3 has no output</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🔢 8. The “less than” relation</h2>
+          <p>Let <code>A = {1, 2, 3}</code> and define <code>x R y</code> when <code>x &lt; y</code>.</p>
+          <div class="code-block">1 &lt; 2  ✓
+1 &lt; 3  ✓
+2 &lt; 3  ✓</div>
+          <div class="math-line">R = {(1, 2), (1, 3), (2, 3)}</div>
+          <p>Here, <code>x R y</code> means “x is related to y by R.” Thus <code>2 R 3</code> is true, while <code>3 R 2</code> is false.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌍 9. Relations in real life</h2>
+          <h3>Students enrolled in classes</h3>
+          <div class="code-block">Alice   → Mathematics
+Bob     → Mathematics
+Bob     → Physics
+Charlie → Physics</div>
+          <p>Bob can connect to two classes because a relation permits multiple outputs.</p>
+          <h3>People who have visited countries</h3>
+          <div class="code-block">Alice → Japan
+Alice → France
+Bob   → Japan</div>
+          <p>Relations naturally describe many-to-many connections.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌟 10. The big hierarchy</h2>
+          <div class="code-block">Cartesian product: all possible pairs
+          A × B
+            ↓ choose some pairs
+Relation: R ⊆ A × B
+            ↓ require exactly one output per input
+Function: f : A → B</div>
+          <p>In probability and quantum mechanics, this language describes connections among outcomes, probabilities, states, measurements, vectors, and operators.</p>
+        </article>
+
+        <article class="card">
+          <h2>📌 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td>Ordered pair</td><td><code>(a, b)</code>, where order matters</td></tr>
+                <tr><td>Cartesian product</td><td><code>A × B</code>, all possible ordered pairs</td></tr>
+                <tr><td>Relation</td><td>A subset of <code>A × B</code></td></tr>
+                <tr><td>Function</td><td>A relation where every input has exactly one output</td></tr>
+                <tr><td class="mono">x R y</td><td>x is related to y by R</td></tr>
+                <tr><td class="mono">R ⊆ A × B</td><td>R is a relation from A to B</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 7 of 8</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>A = {1, 2, 3} · B = {x, y}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>For <code>R = {(1,x), (2,x), (2,y)}</code>, why is R <strong>not</strong> a function from A to B?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">Input 1 has no output</button>
+              <button class="option" type="button" data-correct="true">Input 2 has two outputs</button>
+              <button class="option" type="button">The pair (1, x) is invalid</button>
+              <button class="option" type="button">Relations cannot use letters</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Properties of Relations</h2>
+          <p>Next you can study reflexive, symmetric, antisymmetric, transitive, and equivalence relations.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(5)">← Functions</button>
+          <button class="btn primary" type="button" onclick="showLesson(7)">Next: Relation Properties →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-7">
+        <div class="lesson-tag">Lesson 8 · Classifying Relations</div>
+        <h1>Properties of Relations</h1>
+        <p class="lesson-intro">Relations become more useful when we classify how their connections behave. Four key tests—reflexive, symmetric, antisymmetric, and transitive—reveal the structure.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Recognize reflexive, symmetric, antisymmetric, and transitive relations</li>
+            <li>Test a relation for each property</li>
+            <li>Distinguish symmetric from antisymmetric</li>
+            <li>Identify an <strong>equivalence relation</strong></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>🔎 1. Start with a relation on one set</h2>
+          <p>A relation on A is a subset of <code>A × A</code>. For example:</p>
+          <div class="code-block">A = {1, 2, 3}
+R = {(1, 1), (2, 2), (3, 3)}</div>
+          <p>We now ask which properties R has by inspecting the pairs it contains—or is missing.</p>
+        </article>
+
+        <article class="card">
+          <h2>🪞 2. Reflexive: SELF</h2>
+          <p>A relation is <strong>reflexive</strong> when every element is related to itself.</p>
+          <div class="math-line">For every a ∈ A, (a, a) ∈ R</div>
+          <div class="code-block">A = {1, 2, 3}
+
+Required self-pairs:
+(1, 1)  ✓
+(2, 2)  ✓
+(3, 3)  ✓</div>
+          <p>So <code>R = {(1,1), (2,2), (3,3), (1,2)}</code> is reflexive. Extra pairs do not hurt.</p>
+          <div class="note"><p><strong>Memory:</strong> Reflexive = SELF. Everybody must point to themselves.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>↔️ 3. Symmetric: BACK</h2>
+          <p>A relation is <strong>symmetric</strong> when every connection also appears in the reverse direction.</p>
+          <div class="math-line">(a, b) ∈ R ⇒ (b, a) ∈ R</div>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">Symmetric</span>
+              <code>R = {(1,2), (2,1)}</code>
+              <p>Every arrow has a return arrow.</p>
+            </div>
+            <div class="mini-card bad">
+              <span class="label">Not symmetric</span>
+              <code>R = {(1,2)}</code>
+              <p>The pair (2,1) is missing.</p>
+            </div>
+          </div>
+          <p>The real-life relation “is a sibling of” is generally symmetric: if Alice is Bob’s sibling, Bob is Alice’s sibling.</p>
+        </article>
+
+        <article class="card">
+          <h2>🚫 4. Antisymmetric: no different two-way pair</h2>
+          <p>A relation is <strong>antisymmetric</strong> when two different elements cannot be connected in both directions.</p>
+          <div class="math-line">(a, b) ∈ R and (b, a) ∈ R ⇒ a = b</div>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">Antisymmetric</span>
+              <code>R = {(1,1), (2,2), (1,2)}</code>
+              <p>There is no reverse pair (2,1).</p>
+            </div>
+            <div class="mini-card bad">
+              <span class="label">Not antisymmetric</span>
+              <code>R = {(1,2), (2,1)}</code>
+              <p>1 and 2 differ but connect both ways.</p>
+            </div>
+          </div>
+          <div class="note yellow"><p><strong>Important:</strong> Antisymmetric does not mean “never symmetric.” A relation containing only self-pairs can be both symmetric and antisymmetric.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>⛓️ 5. Transitive: CHAIN</h2>
+          <p>A relation is <strong>transitive</strong> when two connected steps guarantee the direct shortcut.</p>
+          <div class="math-line">(a, b) ∈ R and (b, c) ∈ R ⇒ (a, c) ∈ R</div>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">Transitive</span>
+              <code>R = {(1,2), (2,3), (1,3)}</code>
+              <p>The required shortcut (1,3) exists.</p>
+            </div>
+            <div class="mini-card bad">
+              <span class="label">Not transitive</span>
+              <code>R = {(1,2), (2,3)}</code>
+              <p>The required pair (1,3) is missing.</p>
+            </div>
+          </div>
+          <p>The relation “less than” is transitive: <code>1 &lt; 2</code> and <code>2 &lt; 3</code> imply <code>1 &lt; 3</code>.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌟 6. Four-property memory table</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Property</th><th>Memory</th><th>Test</th></tr></thead>
+              <tbody>
+                <tr><td>Reflexive</td><td>SELF</td><td class="mono">a → a</td></tr>
+                <tr><td>Symmetric</td><td>BACK</td><td class="mono">a → b requires b → a</td></tr>
+                <tr><td>Antisymmetric</td><td>NO DIFFERENT TWO-WAY PAIRS</td><td class="mono">a ↔ b requires a = b</td></tr>
+                <tr><td>Transitive</td><td>CHAIN</td><td class="mono">a → b → c requires a → c</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🧪 7. Full worked classification</h2>
+          <div class="code-block">A = {1, 2, 3}
+R = {(1,1), (2,2), (3,3), (1,2), (2,1)}</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Property</th><th>Result</th><th>Why?</th></tr></thead>
+              <tbody>
+                <tr><td>Reflexive</td><td class="yes">Yes</td><td>All three self-pairs exist</td></tr>
+                <tr><td>Symmetric</td><td class="yes">Yes</td><td>(1,2) has reverse pair (2,1)</td></tr>
+                <tr><td>Antisymmetric</td><td class="no">No</td><td>1 ≠ 2 but both directions exist</td></tr>
+                <tr><td>Transitive</td><td class="yes">Yes</td><td>The needed (1,1) and (2,2) shortcuts exist</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🟰 8. Equivalence relations</h2>
+          <p>An <strong>equivalence relation</strong> must have exactly three properties:</p>
+          <div class="math-line">Reflexive + Symmetric + Transitive</div>
+          <div class="note"><p><strong>Memory:</strong> Equivalence relation = R + S + T.</p></div>
+          <h3>Example: “has the same age”</h3>
+          <ul>
+            <li>Everyone has the same age as themselves → reflexive</li>
+            <li>If Alice has Bob’s age, Bob has Alice’s age → symmetric</li>
+            <li>If Alice and Bob share an age, and Bob and Chen share it, then Alice and Chen share it → transitive</li>
+          </ul>
+          <p>Therefore, “has the same age” is an equivalence relation.</p>
+        </article>
+
+        <article class="card">
+          <h2>🧺 9. Equivalence classes</h2>
+          <p>Equivalence relations group elements that are equivalent. On <code>A = {1,2,3,4,5,6}</code>, relate numbers with the same parity.</p>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">Odd class</span>
+              <code>{1, 3, 5}</code>
+            </div>
+            <div class="mini-card good">
+              <span class="label">Even class</span>
+              <code>{2, 4, 6}</code>
+            </div>
+          </div>
+          <p>These non-overlapping groups are called <strong>equivalence classes</strong>.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌙 10. The big picture</h2>
+          <div class="code-block">Sets
+  ↓
+Cartesian products
+  ↓
+Relations
+  ├──→ Functions
+  └──→ Equivalence relations
+          ↓
+     Equivalence classes</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Concept</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td>Reflexive</td><td class="mono">a R a</td></tr>
+                <tr><td>Symmetric</td><td class="mono">a R b ⇒ b R a</td></tr>
+                <tr><td>Antisymmetric</td><td class="mono">a R b and b R a ⇒ a = b</td></tr>
+                <tr><td>Transitive</td><td class="mono">a R b and b R c ⇒ a R c</td></tr>
+                <tr><td>Equivalence relation</td><td>Reflexive + symmetric + transitive</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 8 of 9</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>A = {1, 2, 3}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>Let <code>R = {(1,1), (2,2), (3,3), (1,2), (2,3), (1,3)}</code>. Which classification is correct?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">Reflexive, symmetric, and transitive</button>
+              <button class="option" type="button" data-correct="true">Reflexive, antisymmetric, and transitive</button>
+              <button class="option" type="button">Symmetric and antisymmetric only</button>
+              <button class="option" type="button">Reflexive only</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Equivalence Classes &amp; Partitions</h2>
+          <p>Next you can see how an equivalence relation divides a set into distinct, non-overlapping groups.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(6)">← Relations</button>
+          <button class="btn primary" type="button" onclick="showLesson(8)">Next: Classes &amp; Partitions →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-8">
+        <div class="lesson-tag">Lesson 9 · Grouping Equivalent Elements</div>
+        <h1>Equivalence Classes &amp; Partitions</h1>
+        <p class="lesson-intro">An equivalence relation groups elements that count as “the same” for a chosen purpose. Those groups are equivalence classes, and together they partition the original set.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Explain what an <strong>equivalence class</strong> is</li>
+            <li>Find the equivalence class of an element</li>
+            <li>Recognize valid partitions of sets</li>
+            <li>Explain how equivalence relations create partitions</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>🔁 1. Quick review</h2>
+          <p>An equivalence relation has three properties:</p>
+          <div class="math-line">Reflexive + Symmetric + Transitive</div>
+          <p>What does such a relation actually do? It separates a set into groups of equivalent elements.</p>
+        </article>
+
+        <article class="card">
+          <h2>🧺 2. What is an equivalence class?</h2>
+          <p>Let <code>A = {1, 2, 3, 4, 5, 6}</code>. Relate two numbers when they have the same parity—both odd or both even.</p>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">Odd equivalence class</span>
+              <code>{1, 3, 5}</code>
+            </div>
+            <div class="mini-card good">
+              <span class="label">Even equivalence class</span>
+              <code>{2, 4, 6}</code>
+            </div>
+          </div>
+          <p>Each class is a group of elements considered equivalent by the relation.</p>
+        </article>
+
+        <article class="card">
+          <h2>🏷️ 3. The class of an element</h2>
+          <p>The notation <code>[a]</code> means “the equivalence class containing a.”</p>
+          <div class="code-block">[1] = {1, 3, 5}
+[3] = {1, 3, 5}
+[5] = {1, 3, 5}
+
+[2] = {2, 4, 6}
+[4] = {2, 4, 6}
+[6] = {2, 4, 6}</div>
+          <div class="math-line">1 ~ 3 ⇒ [1] = [3]</div>
+          <p>If two elements are equivalent, they belong to exactly the same equivalence class.</p>
+        </article>
+
+        <article class="card">
+          <h2>🚧 4. Classes cannot partially overlap</h2>
+          <div class="math-line">{1, 3, 5} ∩ {2, 4, 6} = ∅</div>
+          <p>Two equivalence classes are either completely separate or actually the same class. Partial overlap is impossible.</p>
+          <div class="note yellow"><p>If two classes share even one element, equivalence forces the two classes to be identical.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🧩 5. What is a partition?</h2>
+          <p>A <strong>partition</strong> divides a set into non-empty, non-overlapping groups that include every element.</p>
+          <div class="math-line">P = {{1, 3, 5}, {2, 4, 6}}</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Partition rule</th><th>Question to ask</th></tr></thead>
+              <tbody>
+                <tr><td>Everything is included</td><td>Does every element belong to a group?</td></tr>
+                <tr><td>No overlap</td><td>Do different groups share no elements?</td></tr>
+                <tr><td>No empty groups</td><td>Does every group contain something?</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>✅ 6. Testing partitions</h2>
+          <p>Let <code>A = {1, 2, 3, 4}</code>.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Candidate groups</th><th>Partition?</th><th>Reason</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">{{1,2}, {3,4}}</td><td class="yes">Yes</td><td>Complete, separate, and non-empty</td></tr>
+                <tr><td class="mono">{{1,2}, {2,3}, {4}}</td><td class="no">No</td><td>Element 2 appears in two groups</td></tr>
+                <tr><td class="mono">{{1,2}, {3}}</td><td class="no">No</td><td>Element 4 is missing</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🔗 7. Equivalence relations create partitions</h2>
+          <div class="code-block">Equivalence relation
+        ↓ groups related elements
+Equivalence classes
+        ↓ are separate and cover the set
+Partition</div>
+          <p>This connection also works in reverse: every partition defines an equivalence relation by declaring two elements equivalent when they belong to the same group.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔢 8. Same remainder modulo 3</h2>
+          <p>Let <code>A = {0,1,2,3,4,5,6,7,8}</code>. Define <code>a ~ b</code> when a and b leave the same remainder after division by 3.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Remainder</th><th>Equivalence class</th><th>Examples</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">0</td><td class="mono">{0, 3, 6}</td><td class="mono">[0] = [3] = [6]</td></tr>
+                <tr><td class="mono">1</td><td class="mono">{1, 4, 7}</td><td class="mono">[1] = [4] = [7]</td></tr>
+                <tr><td class="mono">2</td><td class="mono">{2, 5, 8}</td><td class="mono">[2] = [5] = [8]</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-block">[4] = {1, 4, 7}
+[8] = {2, 5, 8}
+
+P = {{0,3,6}, {1,4,7}, {2,5,8}}</div>
+        </article>
+
+        <article class="card">
+          <h2>🏫 9. A real-life partition</h2>
+          <p>Relate students who belong to the same classroom.</p>
+          <div class="code-block">Class A = {Alice, Bob}
+Class B = {Charlie, David}
+Class C = {Emma, Frank}
+
+[Bob]   = {Alice, Bob}
+[David] = {Charlie, David}
+[Emma]  = {Emma, Frank}</div>
+          <p>The classrooms partition the students because each student belongs to exactly one non-empty class.</p>
+        </article>
+
+        <article class="card">
+          <h2>🎲 10. Connection to probability</h2>
+          <p>Probability begins with a sample space <code>Ω</code> containing all possible outcomes. Events are subsets of Ω.</p>
+          <div class="code-block">Ω = {H, T}
+
+Possible events:
+∅, {H}, {T}, {H, T}</div>
+          <p>Your work with sets, power sets, and set operations already provides the language needed to study probability spaces.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌙 11. The big picture</h2>
+          <div class="code-block">Set theory
+  ↓
+Cartesian products
+  ↓
+Relations
+  ├──→ Functions
+  └──→ Equivalence relations
+          ↓
+     Equivalence classes
+          ↓
+       Partitions</div>
+          <p>In more advanced mathematics, treating each class as a single object leads to <strong>quotient sets</strong>.</p>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked practice</h2>
+          <p>On <code>A = {1,2,3,4,5,6}</code>, relate numbers when they are both even or both odd.</p>
+          <div class="code-block">[1] = {1, 3, 5}
+[2] = {2, 4, 6}
+[5] = {1, 3, 5}
+
+All classes: {1,3,5} and {2,4,6}
+Partition: {{1,3,5}, {2,4,6}}</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td>Equivalence relation</td><td>Reflexive + symmetric + transitive</td></tr>
+                <tr><td>Equivalence class</td><td>A group of mutually equivalent elements</td></tr>
+                <tr><td class="mono">[a]</td><td>The equivalence class containing a</td></tr>
+                <tr><td>Partition</td><td>Non-empty, non-overlapping groups covering the whole set</td></tr>
+                <tr><td class="mono">a ~ b</td><td>a is equivalent to b</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="math-line">Relation → Classes → Partition</div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 9 of 10</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>A = {0, 1, 2, 3, 4, 5}</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>Numbers are equivalent when they have the same remainder after division by 2. What is <code>[3]</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">{0, 2, 4}</button>
+              <button class="option" type="button" data-correct="true">{1, 3, 5}</button>
+              <button class="option" type="button">{3}</button>
+              <button class="option" type="button">{0, 1, 2, 3, 4, 5}</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Probability Basics 🎲</h2>
+          <p>Next you can study sample spaces, outcomes, events, probability values, and how set operations describe combined events.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(7)">← Relation Properties</button>
+          <button class="btn primary" type="button" onclick="showLesson(9)">Next: Finite Phase Space →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-9">
+        <div class="lesson-tag">Lesson 10 · Set Theory Meets Physics</div>
+        <h1>Classical Physics on a Finite Phase Space</h1>
+        <p class="lesson-intro">The symbols in a physics textbook become manageable when we read them using sets and functions. This lesson connects finite configurations directly to probability distributions, events, measures, random variables, and spectra.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will understand:</p>
+          <ul>
+            <li>Finite configuration spaces and why <code>2ᴺ</code> appears</li>
+            <li>Why <code>Y<sup>Z</sup></code> denotes a set of functions</li>
+            <li>Events, probability distributions, and probability measures</li>
+            <li>Conditional probability</li>
+            <li>Random variables and their spectra</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>📦 1. Finite configuration spaces</h2>
+          <p>A <strong>configuration space</strong> X contains every possible state of a physical system. The book begins with X finite, meaning it has only finitely many configurations.</p>
+          <div class="code-block">One coin:   X = {H, T}
+Two coins:  X = {HH, HT, TH, TT}
+Three coins: |X| = 8</div>
+          <p>A system has one actual configuration, but probability lets us describe uncertainty about which configuration it is in.</p>
+        </article>
+
+        <article class="card">
+          <h2>💾 2. N bits and the meaning of 2ᴺ</h2>
+          <p>Each bit has two possible values, <code>{0,1}</code>. An N-bit configuration chooses one value for every bit.</p>
+          <div class="math-line">X = {0,1}ᴺ &nbsp;&nbsp; and &nbsp;&nbsp; |X| = 2ᴺ</div>
+          <div class="code-block">For N = 3:
+
+X = {000, 001, 010, 011, 100, 101, 110, 111}
+|X| = 2³ = 8</div>
+          <div class="note yellow"><p><code>{0,1}ᴺ</code> is the <strong>set</strong> of configurations; <code>2ᴺ</code> is the <strong>number</strong> of configurations.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>✖️ 3. Cartesian products were preparing us</h2>
+          <div class="code-block">{0,1}² = {0,1} × {0,1}
+        = {(0,0), (0,1), (1,0), (1,1)}
+
+{0,1}³ = {0,1} × {0,1} × {0,1}</div>
+          <p>Repeated Cartesian products generate every possible multi-bit configuration.</p>
+        </article>
+
+        <article class="card">
+          <h2>🗺️ 4. Function spaces: Y<sup>Z</sup></h2>
+          <p>For arbitrary sets Y and Z, the notation <code>Y<sup>Z</sup></code> means the set of <strong>all functions from Z to Y</strong>.</p>
+          <div class="math-line">Y<sup>Z</sup> = {x | x : Z → Y}</div>
+          <div class="code-block">Y = {0,1}
+Z = {1,2}
+
+All functions Z → Y:
+(0,0), (0,1), (1,0), (1,1)
+
+|Yᶻ| = 2² = 4</div>
+          <p>A configuration is not merely a list: it is a function assigning one allowed value to every location.</p>
+        </article>
+
+        <article class="card">
+          <h2>🧲 5. Spin configurations are functions</h2>
+          <p>Let A be a set of lattice sites and S the allowed spin states. One physical configuration is a function <code>x : A → S</code>.</p>
+          <div class="code-block">A = {a, b, c}
+S = {1, 2, 3}
+
+x(a) = 1
+x(b) = 3
+x(c) = 2</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Site</th><th>Mapping</th><th>Spin state</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">a</td><td>→</td><td class="mono">1</td></tr>
+                <tr><td class="mono">b</td><td>→</td><td class="mono">3</td></tr>
+                <tr><td class="mono">c</td><td>→</td><td class="mono">2</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 6. Why deterministic physics uses probability</h2>
+          <p>The system may have a definite state even when we do not know it. A probability distribution describes that uncertainty.</p>
+          <div class="code-block">X = {HH, HT, TH, TT}
+
+p(HH) = 0.25
+p(HT) = 0.25
+p(TH) = 0.25
+p(TT) = 0.25</div>
+        </article>
+
+        <article class="card">
+          <h2>🎯 7. Event = subset of X</h2>
+          <p>An <strong>event</strong> is any subset <code>U ⊆ X</code>. The power set <code>𝒫(X)</code> is therefore the set of all possible events.</p>
+          <div class="code-block">X = {HH, HT, TH, TT}
+U = {HH, HT}</div>
+          <p>U is the event “the first coin is Heads.”</p>
+          <div class="math-line">Event = subset of the sample space</div>
+        </article>
+
+        <article class="card">
+          <h2>📊 8. Probability distribution</h2>
+          <div class="math-line">p : X → [0,1]</div>
+          <p>A distribution assigns one probability to each individual outcome, and all outcome probabilities sum to one.</p>
+          <div class="math-line">∑<sub>x∈X</sub> p(x) = 1</div>
+          <p>For four equally likely outcomes, <code>0.25 + 0.25 + 0.25 + 0.25 = 1</code>.</p>
+        </article>
+
+        <article class="card">
+          <h2>⚖️ 9. Distribution versus measure</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Object</th><th>Notation</th><th>Input</th></tr></thead>
+              <tbody>
+                <tr><td>Probability distribution</td><td class="mono">p : X → [0,1]</td><td>One outcome</td></tr>
+                <tr><td>Probability measure</td><td class="mono">P : 𝒫(X) → [0,1]</td><td>An event/subset</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>For finite X, the two are connected by adding the outcome probabilities inside an event:</p>
+          <div class="math-line">P(U) = ∑<sub>x∈U</sub> p(x)</div>
+          <div class="code-block">X = {H, T}
+p(H) = p(T) = 0.5
+
+U = {H}
+P(U) = 0.5
+P(X) = 1</div>
+        </article>
+
+        <article class="card">
+          <h2>➕ 10. Additivity for disjoint events</h2>
+          <p>If events U and V do not overlap, then <code>U ∩ V = ∅</code> and their probabilities add.</p>
+          <div class="math-line">P(U ∪ V) = P(U) + P(V)</div>
+          <div class="code-block">X = {H, T}
+U = {H}, V = {T}
+
+U ∩ V = ∅
+P(U ∪ V) = 0.5 + 0.5 = 1</div>
+        </article>
+
+        <article class="card">
+          <h2>🔍 11. Conditional probability</h2>
+          <p><code>P(U | V)</code> means “the probability of U given that V happened.”</p>
+          <div class="math-line">P(U | V) = P(U ∩ V) / P(V), &nbsp; P(V) &gt; 0</div>
+          <div class="code-block">Fair die: X = {1,2,3,4,5,6}
+U = {2,4,6}       even
+V = {4,5,6}       result is at least 4
+U ∩ V = {4,6}
+
+P(U | V) = (2/6) ÷ (3/6) = 2/3</div>
+          <p>Once V is known, we restrict attention to V and ask which of those remaining outcomes also belong to U.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔢 12. Random variables</h2>
+          <p>A <strong>random variable</strong> is a function assigning a real number to every outcome.</p>
+          <div class="math-line">f : X → ℝ</div>
+          <div class="compare-grid">
+            <div class="mini-card">
+              <span class="label">Coin indicator</span>
+              <code>f(H) = 1<br>f(T) = 0</code>
+            </div>
+            <div class="mini-card">
+              <span class="label">Squared die result</span>
+              <code>f(x) = x²<br>f(3) = 9</code>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>✨ 13. Spectrum of a random variable</h2>
+          <p>The spectrum is the set of all values the random variable can produce.</p>
+          <div class="math-line">σ(f) = {f(x) | x ∈ X}</div>
+          <div class="code-block">Coin indicator:
+σ(f) = {0, 1}
+
+For X = {1,2,3,4,5,6} and f(x) = x²:
+σ(f) = {1, 4, 9, 16, 25, 36}</div>
+        </article>
+
+        <article class="card">
+          <h2>📖 14. Decode the textbook definition</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Textbook notation</th><th>Plain English</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">U ⊆ X</td><td>U is an event</td></tr>
+                <tr><td class="mono">p : X → [0,1]</td><td>Assign probability to each outcome</td></tr>
+                <tr><td class="mono">P : 𝒫(X) → [0,1]</td><td>Assign probability to each event</td></tr>
+                <tr><td class="mono">P(U | V)</td><td>Probability of U given V</td></tr>
+                <tr><td class="mono">f : X → ℝ</td><td>A random variable</td></tr>
+                <tr><td class="mono">σ(f)</td><td>All possible values of f</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🪙 15. One complete system</h2>
+          <div class="code-block">Sample space:       X = {H, T}
+Distribution:       p(H) = p(T) = 0.5
+Event:              U = {H}
+Event probability:  P(U) = 0.5
+Random variable:    f(H) = 1, f(T) = 0
+Spectrum:           σ(f) = {0, 1}</div>
+          <p>This tiny coin model contains nearly the entire definition in one place.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌙 16. Your previous lessons are all here</h2>
+          <div class="code-block">Sets → X = {H,T}
+Subsets → U ⊆ X is an event
+Power sets → 𝒫(X) is all events
+Union/intersection → combine and overlap events
+Functions → p : X → [0,1]
+Probability measures → P : 𝒫(X) → [0,1]
+Random variables → f : X → ℝ</div>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked mini-quiz</h2>
+          <p>Let <code>X = {1,2,3,4}</code>, with <code>p(x)=1/4</code>, event <code>U={2,4}</code>, and random variable <code>f(x)=x²</code>.</p>
+          <div class="code-block">P(U) = 2/4 = 1/2
+U ⊆ X: yes
+f(3) = 9
+σ(f) = {1, 4, 9, 16}
+Codomain of f: ℝ
+p is a function: yes
+p(2) = 1/4</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Concept</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">X</td><td>Possible configurations or outcomes</td></tr>
+                <tr><td class="mono">𝒫(X)</td><td>Set of all events</td></tr>
+                <tr><td class="mono">p : X → [0,1]</td><td>Probability distribution</td></tr>
+                <tr><td class="mono">P : 𝒫(X) → [0,1]</td><td>Probability measure</td></tr>
+                <tr><td class="mono">f : X → ℝ</td><td>Random variable</td></tr>
+                <tr><td class="mono">σ(f)</td><td>Possible outputs of f</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 10 of 11</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>X = {1, 2, 3, 4} · f(x) = x²</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>What is the spectrum <code>σ(f)</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">{1, 2, 3, 4}</button>
+              <button class="option" type="button" data-correct="true">{1, 4, 9, 16}</button>
+              <button class="option" type="button">{0, 1}</button>
+              <button class="option" type="button">ℝ</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Probability Spaces &amp; Events</h2>
+          <p>Next you can focus on the triple <code>(X, 𝒫(X), P)</code> and sharpen the distinction between outcomes, events, distributions, and measures.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(8)">← Classes &amp; Partitions</button>
+          <button class="btn primary" type="button" onclick="showLesson(10)">Next: Probability Spaces →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-10">
+        <div class="lesson-tag">Lesson 11 · Probability Foundations</div>
+        <h1>Probability Spaces &amp; Events</h1>
+        <p class="lesson-intro">A probability space organizes three things: possible outcomes, the events we can ask about, and a rule assigning a probability to every event.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will understand:</p>
+          <ul>
+            <li>Sample spaces, outcomes, and events</li>
+            <li>Why the power set represents all events in a finite model</li>
+            <li>Probability distributions and probability measures</li>
+            <li>The probability-space notation <code>(X, 𝒫(X), P)</code></li>
+            <li>The difference between <code>p(x)</code> and <code>P(U)</code></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>🎲 1. Sample space and outcome</h2>
+          <p>The <strong>sample space</strong> X is the set of every possible result of an experiment. An <strong>outcome</strong> is one element of X.</p>
+          <div class="compare-grid">
+            <div class="mini-card">
+              <span class="label">Coin toss</span>
+              <code>X = {H, T}</code>
+              <p>H and T are individual outcomes.</p>
+            </div>
+            <div class="mini-card">
+              <span class="label">Six-sided die</span>
+              <code>X = {1,2,3,4,5,6}</code>
+              <p>For example, <code>4 ∈ X</code>.</p>
+            </div>
+          </div>
+          <div class="math-line">X = all possible outcomes</div>
+        </article>
+
+        <article class="card">
+          <h2>🎯 2. Events are subsets</h2>
+          <p>An <strong>event</strong> collects the outcomes that make a statement true.</p>
+          <div class="code-block">Die sample space:
+X = {1,2,3,4,5,6}
+
+U = {4}          “roll a 4”
+V = {2,4,6}      “roll an even number”
+W = {1,2,3}      “roll less than 4”</div>
+          <div class="math-line">Event U ⊆ X</div>
+          <p>An event may contain one outcome, many outcomes, no outcomes, or every outcome.</p>
+        </article>
+
+        <article class="card">
+          <h2>⚫ 3. Impossible and certain events</h2>
+          <div class="compare-grid">
+            <div class="mini-card bad">
+              <span class="label">Impossible event</span>
+              <code>∅ ⊆ X<br>P(∅) = 0</code>
+              <p>Example: rolling a 7 on a standard die.</p>
+            </div>
+            <div class="mini-card good">
+              <span class="label">Certain event</span>
+              <code>X ⊆ X<br>P(X) = 1</code>
+              <p>Some outcome in X must happen.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>📦 4. Power set = all events</h2>
+          <p>Because events are subsets, the power set <code>𝒫(X)</code> contains every event.</p>
+          <div class="code-block">X = {H, T}
+
+𝒫(X) = {
+  ∅,          impossible
+  {H},        Heads
+  {T},        Tails
+  {H,T}       certain
+}</div>
+          <div class="math-line">|𝒫(X)| = 2<sup>|X|</sup></div>
+          <p>Two outcomes create four events; three outcomes create eight events.</p>
+        </article>
+
+        <article class="card">
+          <h2>⚖️ 5. Probability measure</h2>
+          <p>A probability measure P is a function taking an event as input and returning a number between 0 and 1.</p>
+          <div class="math-line">P : 𝒫(X) → [0,1]</div>
+          <div class="code-block">Event → Probability measure → Probability
+
+{H}   → P → 0.5
+{H,T} → P → 1</div>
+        </article>
+
+        <article class="card">
+          <h2>🔬 6. Distribution p versus measure P</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Object</th><th>Acts on</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">p : X → [0,1]</td><td>Individual outcomes</td><td class="mono">p(H) = 0.5</td></tr>
+                <tr><td class="mono">P : 𝒫(X) → [0,1]</td><td>Events/subsets</td><td class="mono">P({H,T}) = 1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>For finite X, add the outcome probabilities inside U to obtain its event probability:</p>
+          <div class="math-line">P(U) = ∑<sub>x∈U</sub> p(x)</div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 7. Fair-die event probability</h2>
+          <div class="code-block">p(1) = p(2) = ··· = p(6) = 1/6
+
+U = {2,4,6}
+P(U) = p(2) + p(4) + p(6)
+     = 1/6 + 1/6 + 1/6
+     = 1/2</div>
+        </article>
+
+        <article class="card">
+          <h2>🧱 8. The probability space</h2>
+          <div class="math-line">(X, 𝒫(X), P)</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Part</th><th>Role</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">X</td><td>Sample space: all outcomes</td></tr>
+                <tr><td class="mono">𝒫(X)</td><td>Event space: all events</td></tr>
+                <tr><td class="mono">P</td><td>Probability measure: probability of each event</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-block">Fair coin:
+X = {H,T}
+
+P(∅) = 0
+P({H}) = 1/2
+P({T}) = 1/2
+P({H,T}) = 1</div>
+        </article>
+
+        <article class="card">
+          <h2>🧮 9. Set operations describe event logic</h2>
+          <p>Let <code>U={2,4,6}</code> and <code>V={4,5,6}</code> in a fair die space.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Operation</th><th>Result</th><th>Meaning</th><th>Probability</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">U ∩ V</td><td class="mono">{4,6}</td><td>U and V</td><td class="mono">2/6 = 1/3</td></tr>
+                <tr><td class="mono">U ∪ V</td><td class="mono">{2,4,5,6}</td><td>U or V</td><td class="mono">4/6 = 2/3</td></tr>
+                <tr><td class="mono">U − V</td><td class="mono">{2}</td><td>U but not V</td><td class="mono">1/6</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>➕ 10. Union and overlap</h2>
+          <p>If events overlap, adding their probabilities counts the intersection twice. Subtract it once:</p>
+          <div class="math-line">P(U ∪ V) = P(U) + P(V) − P(U ∩ V)</div>
+          <p>If U and V are disjoint, then <code>U ∩ V = ∅</code>, so the rule simplifies:</p>
+          <div class="math-line">P(U ∪ V) = P(U) + P(V)</div>
+          <div class="note yellow"><p><strong>Disjoint</strong> means the events have no outcomes in common.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🔍 11. Conditional probability</h2>
+          <div class="math-line">P(U | V) = P(U ∩ V) / P(V)</div>
+          <p>This asks for the probability of U after we learn that V happened.</p>
+          <div class="code-block">U = {2,4,6}      even
+V = {4,5,6}      at least 4
+U ∩ V = {4,6}
+
+P(U | V) = (2/6) ÷ (3/6) = 2/3</div>
+          <p>Knowing V shrinks the possible world from six outcomes to <code>{4,5,6}</code>; two of those three are even.</p>
+        </article>
+
+        <article class="card">
+          <h2>💡 12. One complete physical model</h2>
+          <div class="code-block">Single-bit sample space:
+X = {0,1}
+
+Distribution:
+p(0) = 0.7, p(1) = 0.3
+
+Event:
+U = {1}, P(U) = 0.3
+
+Random variable:
+f(0) = 10, f(1) = 20
+
+Spectrum:
+σ(f) = {10,20}</div>
+          <p>This connects physical states, uncertainty, events, probability measures, random variables, and spectra.</p>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked mini-quiz</h2>
+          <p>Let <code>X={1,2,3,4}</code>, with probabilities 0.1, 0.2, 0.3, 0.4. Let <code>U={2,4}</code> and <code>V={3,4}</code>.</p>
+          <div class="code-block">Sample space: X = {1,2,3,4}
+U is an event: yes
+P(U) = 0.2 + 0.4 = 0.6
+U ∩ V = {4}
+P(U ∩ V) = 0.4
+U ∪ V = {2,3,4}
+P(U ∪ V) = 0.2 + 0.3 + 0.4 = 0.9
+P(U | V) = 0.4 / (0.3 + 0.4) = 4/7</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">X</td><td>All possible outcomes</td></tr>
+                <tr><td class="mono">U ⊆ X</td><td>U is an event</td></tr>
+                <tr><td class="mono">𝒫(X)</td><td>All events</td></tr>
+                <tr><td class="mono">p : X → [0,1]</td><td>Outcome distribution</td></tr>
+                <tr><td class="mono">P : 𝒫(X) → [0,1]</td><td>Event probability measure</td></tr>
+                <tr><td class="mono">(X, 𝒫(X), P)</td><td>A probability space</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 11 of 12</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>P(U ∩ V) = 0.4 · P(V) = 0.7</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>What is <code>P(U | V)</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">0.28</button>
+              <button class="option" type="button">0.4</button>
+              <button class="option" type="button" data-correct="true">4/7</button>
+              <button class="option" type="button">0.9</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Probability Rules</h2>
+          <p>Next you can practice complements, union rules, intersections, disjoint events, and conditional probability in greater depth.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(9)">← Finite Phase Space</button>
+          <button class="btn primary" type="button" onclick="showLesson(11)">Next: Probability Rules →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-11">
+        <div class="lesson-tag">Lesson 12 · Event Calculations</div>
+        <h1>Probability Rules</h1>
+        <p class="lesson-intro">Probability formulas come directly from the set operations you already know. Complements, unions, intersections, and conditional probabilities describe how events combine.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will understand:</p>
+          <ul>
+            <li>Complements of events</li>
+            <li>Union and intersection probabilities</li>
+            <li>Disjoint events and the addition rule</li>
+            <li>Why overlapping probabilities require subtraction</li>
+            <li>Conditional probability and the multiplication rule</li>
+            <li>The difference between independent and disjoint events</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>🧩 1. Events use set operations</h2>
+          <p>An event is a subset <code>U ⊆ X</code>, so probability uses familiar set operations:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Set expression</th><th>Event meaning</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">U ∪ V</td><td>U or V—or both</td></tr>
+                <tr><td class="mono">U ∩ V</td><td>U and V</td></tr>
+                <tr><td class="mono">U − V</td><td>U but not V</td></tr>
+                <tr><td class="mono">Uᶜ</td><td>Not U</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🌗 2. Complement of an event</h2>
+          <p>The complement contains everything in X that is not in U.</p>
+          <div class="math-line">Uᶜ = X − U</div>
+          <div class="code-block">X = {1,2,3,4,5,6}
+U = {2,4,6}       even
+Uᶜ = {1,3,5}      not even</div>
+          <p>Either U happens or it does not, so their probabilities total one:</p>
+          <div class="math-line">P(Uᶜ) = 1 − P(U)</div>
+          <p>Here, <code>P(U)=1/2</code>, so <code>P(Uᶜ)=1−1/2=1/2</code>.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔀 3. Union and intersection</h2>
+          <p>Let <code>U={2,4,6}</code> and <code>V={4,5,6}</code> for a fair die.</p>
+          <div class="compare-grid">
+            <div class="mini-card">
+              <span class="label">Union: U or V</span>
+              <code>U ∪ V = {2,4,5,6}</code>
+            </div>
+            <div class="mini-card">
+              <span class="label">Intersection: U and V</span>
+              <code>U ∩ V = {4,6}</code>
+            </div>
+          </div>
+          <div class="math-line">P(U ∩ V) = 2/6 = 1/3</div>
+        </article>
+
+        <article class="card">
+          <h2>🚧 4. Disjoint events</h2>
+          <p>Two events are <strong>disjoint</strong> when they cannot happen together.</p>
+          <div class="math-line">U ∩ V = ∅</div>
+          <div class="code-block">U = {1,2}
+V = {5,6}
+
+U ∩ V = ∅</div>
+          <p>Nothing is counted twice, so their union probability is a simple sum:</p>
+          <div class="math-line">P(U ∪ V) = P(U) + P(V)</div>
+        </article>
+
+        <article class="card">
+          <h2>➕ 5. General addition rule</h2>
+          <p>For overlapping events, adding <code>P(U)</code> and <code>P(V)</code> counts the intersection twice. Subtract it once.</p>
+          <div class="math-line">P(U ∪ V) = P(U) + P(V) − P(U ∩ V)</div>
+          <div class="code-block">P(U) = 1/2
+P(V) = 1/2
+P(U ∩ V) = 1/3
+
+P(U ∪ V) = 1/2 + 1/2 − 1/3
+           = 2/3</div>
+          <div class="note yellow"><p><strong>Why subtract?</strong> The shared outcomes were included once in U and once again in V.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🔍 6. Conditional probability</h2>
+          <p><code>P(U | V)</code> asks for the probability of U after learning that V occurred.</p>
+          <div class="math-line">P(U | V) = P(U ∩ V) / P(V), &nbsp; P(V) &gt; 0</div>
+          <div class="code-block">U = {2,4,6}       even
+V = {4,5,6}       greater than 3
+
+U ∩ V = {4,6}
+P(U ∩ V) = 1/3
+P(V) = 1/2
+
+P(U | V) = (1/3) ÷ (1/2) = 2/3</div>
+          <p>Knowing V shrinks the possible outcomes to <code>{4,5,6}</code>, and two of those three are even.</p>
+        </article>
+
+        <article class="card">
+          <h2>✖️ 7. Multiplication rule</h2>
+          <p>Rearrange the conditional-probability formula by multiplying both sides by <code>P(V)</code>:</p>
+          <div class="math-line">P(U ∩ V) = P(U | V)P(V)</div>
+          <p>This form is useful when you know a conditional probability and need the probability that both events occur.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔓 8. Independence preview</h2>
+          <p>Events U and V are <strong>independent</strong> when knowing V happened does not change the probability of U.</p>
+          <div class="math-line">P(U | V) = P(U)</div>
+          <p>Combining this with the multiplication rule gives the standard independence test:</p>
+          <div class="math-line">P(U ∩ V) = P(U)P(V)</div>
+        </article>
+
+        <article class="card">
+          <h2>🪙 9. Independent coin flips</h2>
+          <div class="code-block">X = {HH, HT, TH, TT}
+
+U = {HH, HT}    first flip is H
+V = {HH, TH}    second flip is H
+
+P(U) = 1/2
+P(V) = 1/2
+U ∩ V = {HH}
+P(U ∩ V) = 1/4</div>
+          <div class="math-line">1/4 = (1/2)(1/2)</div>
+          <p>The equality proves U and V are independent: the first flip does not affect the second.</p>
+        </article>
+
+        <article class="card">
+          <h2>⚠️ 10. Independent is not disjoint</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Concept</th><th>Meaning</th><th>Test</th></tr></thead>
+              <tbody>
+                <tr><td>Disjoint</td><td>Cannot occur together</td><td class="mono">U ∩ V = ∅</td></tr>
+                <tr><td>Independent</td><td>Knowing one gives no information about the other</td><td class="mono">P(U ∩ V)=P(U)P(V)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>If U and V have positive probability and are disjoint, then <code>P(U ∩ V)=0</code> while <code>P(U)P(V)&gt;0</code>. Therefore, they cannot also be independent.</p>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked die practice</h2>
+          <p>For a fair die, let <code>U={2,4,6}</code> and <code>V={3,4,5,6}</code>.</p>
+          <div class="code-block">U ∩ V = {4,6}
+U ∪ V = {2,3,4,5,6}
+Uᶜ = {1,3,5}
+
+P(U) = 1/2
+P(V) = 2/3
+P(U ∩ V) = 1/3
+P(U ∪ V) = 5/6
+P(U | V) = (1/3) ÷ (2/3) = 1/2
+
+P(U)P(V) = (1/2)(2/3) = 1/3
+Therefore U and V are independent.</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Formula summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Concept</th><th>Formula</th></tr></thead>
+              <tbody>
+                <tr><td>Complement</td><td class="mono">P(Uᶜ)=1−P(U)</td></tr>
+                <tr><td>Disjoint addition</td><td class="mono">P(U∪V)=P(U)+P(V)</td></tr>
+                <tr><td>General addition</td><td class="mono">P(U∪V)=P(U)+P(V)−P(U∩V)</td></tr>
+                <tr><td>Conditional probability</td><td class="mono">P(U|V)=P(U∩V)/P(V)</td></tr>
+                <tr><td>Multiplication</td><td class="mono">P(U∩V)=P(U|V)P(V)</td></tr>
+                <tr><td>Independence</td><td class="mono">P(U∩V)=P(U)P(V)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 12 of 13</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>Two fair coin flips</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>If U means “first flip is Heads” and V means “second flip is Heads,” which statement is correct?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">U and V are disjoint</button>
+              <button class="option" type="button">P(U ∩ V) = 0</button>
+              <button class="option" type="button" data-correct="true">U and V are independent because 1/4 = (1/2)(1/2)</button>
+              <button class="option" type="button">P(U | V) = 1</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Independence</h2>
+          <p>Next you can make independence intuitive through more examples before moving to random variables and expectation.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(10)">← Probability Spaces</button>
+          <button class="btn primary" type="button" onclick="showLesson(12)">Next: Independence →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-12">
+        <div class="lesson-tag">Lesson 13 · Events Without Influence</div>
+        <h1>Independence</h1>
+        <p class="lesson-intro">Two events are independent when learning that one occurred gives no new information about the other. This idea turns many complicated joint probabilities into multiplication.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Explain independence intuitively</li>
+            <li>Test independence using intersections</li>
+            <li>Connect independence with conditional probability</li>
+            <li>Distinguish independent from disjoint events</li>
+            <li>Calculate probabilities for independent experiments</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>🪙 1. What does independent mean?</h2>
+          <p>Flip a coin twice. Whether the first flip is H or T, the second flip still has probability <code>1/2</code> of Heads.</p>
+          <div class="math-line">Knowing one event does not change the other.</div>
+          <div class="code-block">First flip H → second flip is still H or T
+First flip T → second flip is still H or T</div>
+        </article>
+
+        <article class="card">
+          <h2>🔍 2. Conditional-probability test</h2>
+          <p>If V gives no information about U, then conditioning on V leaves U’s probability unchanged.</p>
+          <div class="math-line">P(U | V) = P(U)</div>
+          <p>Likewise, when the conditional probability is defined:</p>
+          <div class="math-line">P(V | U) = P(V)</div>
+        </article>
+
+        <article class="card">
+          <h2>✖️ 3. The main independence formula</h2>
+          <p>Start with <code>P(U|V)=P(U∩V)/P(V)</code>. If <code>P(U|V)=P(U)</code>, multiply by <code>P(V)</code>:</p>
+          <div class="math-line">P(U ∩ V) = P(U)P(V)</div>
+          <div class="note"><p>This product test works even when a conditional probability would involve a zero-probability event, so it is the standard definition.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>✅ 4. Two independent coin flips</h2>
+          <div class="code-block">X = {HH, HT, TH, TT}
+
+U = {HH, HT}    first flip is Heads
+V = {HH, TH}    second flip is Heads
+
+P(U) = 2/4 = 1/2
+P(V) = 2/4 = 1/2
+U ∩ V = {HH}
+P(U ∩ V) = 1/4</div>
+          <div class="math-line">P(U)P(V) = (1/2)(1/2) = 1/4</div>
+          <p>Because <code>P(U∩V)=P(U)P(V)</code>, the events are independent.</p>
+        </article>
+
+        <article class="card">
+          <h2>❌ 5. A dependent die example</h2>
+          <div class="code-block">X = {1,2,3,4,5,6}
+U = {2,4,6}       even
+V = {4,5,6}       greater than 3
+
+P(U) = 1/2
+P(V) = 1/2
+U ∩ V = {4,6}
+P(U ∩ V) = 1/3
+P(U)P(V) = 1/4</div>
+          <div class="math-line">1/3 ≠ 1/4</div>
+          <p>Therefore, U and V are dependent.</p>
+        </article>
+
+        <article class="card">
+          <h2>🧠 6. The same example conditionally</h2>
+          <div class="code-block">P(U | V) = P(U ∩ V) / P(V)
+         = (1/3) ÷ (1/2)
+         = 2/3
+
+But P(U) = 1/2</div>
+          <p>Learning that the result exceeds 3 changes the probability of an even result from <code>1/2</code> to <code>2/3</code>. That change means dependence.</p>
+        </article>
+
+        <article class="card">
+          <h2>⚖️ 7. Independent versus dependent</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Type</th><th>Effect of knowing V</th><th>Test</th></tr></thead>
+              <tbody>
+                <tr><td>Independent</td><td>No change to U</td><td class="mono">P(U|V)=P(U)</td></tr>
+                <tr><td>Dependent</td><td>Changes U’s probability</td><td class="mono">P(U|V)≠P(U)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>🚧 8. Independent does not mean disjoint</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Concept</th><th>Meaning</th><th>Formula</th></tr></thead>
+              <tbody>
+                <tr><td>Disjoint</td><td>Cannot happen together</td><td class="mono">U∩V=∅</td></tr>
+                <tr><td>Independent</td><td>Do not affect each other’s probabilities</td><td class="mono">P(U∩V)=P(U)P(V)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-block">Die events U={1}, V={2}:
+
+P(U ∩ V) = 0              disjoint
+P(U)P(V) = (1/6)(1/6)
+          = 1/36
+
+0 ≠ 1/36, so they are not independent.</div>
+          <div class="note yellow"><p>Two disjoint events with positive probabilities cannot be independent.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 9. Independent experiments</h2>
+          <p>A coin flip and a die roll do not affect each other. Multiply their probabilities for a combined result.</p>
+          <div class="math-line">P(Heads and 6) = (1/2)(1/6) = 1/12</div>
+          <p>For three independent fair coins:</p>
+          <div class="math-line">P(HHH) = (1/2)³ = 1/8</div>
+          <p>More generally, for suitably independent events:</p>
+          <div class="math-line">P(A ∩ B ∩ C) = P(A)P(B)P(C)</div>
+        </article>
+
+        <article class="card">
+          <h2>⚡ 10. Why independence matters</h2>
+          <p>Independence replaces a difficult joint calculation with multiplication.</p>
+          <div class="code-block">P(A) = 0.2
+P(B) = 0.5
+
+If independent:
+P(A ∩ B) = 0.2 × 0.5 = 0.1</div>
+        </article>
+
+        <article class="card">
+          <h2>📦 11. Outcomes, events, p, and P</h2>
+          <p>Keep the levels separate:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Object</th><th>Example</th><th>Notation</th></tr></thead>
+              <tbody>
+                <tr><td>Outcome</td><td>Die result 2</td><td class="mono">2 ∈ X</td></tr>
+                <tr><td>Event</td><td>Even result</td><td class="mono">{2,4,6} ⊆ X</td></tr>
+                <tr><td>Distribution</td><td>Probability of outcome 2</td><td class="mono">p(2)=1/6</td></tr>
+                <tr><td>Measure</td><td>Probability of even event</td><td class="mono">P({2,4,6})=1/2</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked die practice</h2>
+          <p>For a fair die, let <code>U={2,4,6}</code> and <code>V={1,2,3}</code>.</p>
+          <div class="code-block">P(U) = 1/2
+P(V) = 1/2
+U ∩ V = {2}
+P(U ∩ V) = 1/6
+P(U)P(V) = 1/4
+
+Since 1/6 ≠ 1/4, U and V are not independent.
+
+P(U | V) = (1/6) ÷ (1/2) = 1/3
+P(U | V) ≠ P(U)</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Idea</th><th>Formula</th></tr></thead>
+              <tbody>
+                <tr><td>Conditional probability</td><td class="mono">P(U|V)=P(U∩V)/P(V)</td></tr>
+                <tr><td>Independent conditionally</td><td class="mono">P(U|V)=P(U)</td></tr>
+                <tr><td>Independence product test</td><td class="mono">P(U∩V)=P(U)P(V)</td></tr>
+                <tr><td>Disjoint</td><td class="mono">U∩V=∅</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 13 of 15</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>Two fair coin flips</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>For “first flip is Heads” and “second flip is Heads,” what proves independence?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">Their intersection is empty</button>
+              <button class="option" type="button">They cannot happen together</button>
+              <button class="option" type="button" data-correct="true">P(U∩V)=1/4 and P(U)P(V)=1/4</button>
+              <button class="option" type="button">P(U|V)=1</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Random Variables</h2>
+          <p>Next you can return to <code>f : X → ℝ</code>, interpret physical quantities as functions, study spectra, and prepare for expectation.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(11)">← Probability Rules</button>
+          <button class="btn primary" type="button" onclick="showLesson(13)">Next: Random Variables →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-13">
+        <div class="lesson-tag">Lesson 14 · Numerical Quantities</div>
+        <h1>Random Variables &amp; Expectation</h1>
+        <p class="lesson-intro">A random variable turns each possible outcome into a number. Its expectation combines those numerical values with their probabilities to describe the long-run average.</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <ul>
+            <li>Interpret a random variable as a function <code>f : X → ℝ</code></li>
+            <li>Find its spectrum</li>
+            <li>Calculate expected value</li>
+            <li>Connect expectation to physical observables</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>🔢 1. Random variable = numerical function</h2>
+          <div class="math-line">f : X → ℝ</div>
+          <p>Each outcome x receives exactly one real-number value <code>f(x)</code>.</p>
+          <div class="code-block">X = {H, T}
+f(H) = 1
+f(T) = 0</div>
+          <p>The name “random” refers to the uncertain input x; the function itself is fixed.</p>
+        </article>
+
+        <article class="card">
+          <h2>✨ 2. Spectrum</h2>
+          <p>The spectrum is the set of values the random variable can produce.</p>
+          <div class="math-line">σ(f) = {f(x) | x ∈ X}</div>
+          <div class="code-block">For f(H)=1 and f(T)=0:
+σ(f) = {0,1}</div>
+        </article>
+
+        <article class="card">
+          <h2>⚖️ 3. Expected value</h2>
+          <p>Multiply every possible value by the probability of its outcome, then add.</p>
+          <div class="math-line">E[f] = ∑<sub>x∈X</sub> f(x)p(x)</div>
+          <div class="code-block">X = {1,2,3}
+p(1)=0.2, p(2)=0.5, p(3)=0.3
+f(x)=x
+
+E[f] = 1(0.2)+2(0.5)+3(0.3)
+     = 2.1</div>
+          <div class="note"><p>Expectation need not be a possible outcome. It is a probability-weighted center.</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 4. Fair-die expectation</h2>
+          <div class="code-block">X = {1,2,3,4,5,6}
+p(x)=1/6
+f(x)=x
+
+E[f] = (1+2+3+4+5+6)/6
+     = 21/6
+     = 3.5</div>
+          <p>You can never roll 3.5, but repeated rolls average toward 3.5.</p>
+        </article>
+
+        <article class="card">
+          <h2>🌙 5. Physical observable</h2>
+          <p>If f assigns an energy, position, or other measurable number to every physical state, then f is an observable quantity and <code>E[f]</code> is its average value under distribution p.</p>
+          <div class="code-block">State x → probability p(x)
+State x → measured quantity f(x)
+
+Combine them → E[f]</div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 14 of 15</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>Fair die · f(x)=x</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>What is <code>E[f]</code>?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">3</button>
+              <button class="option" type="button" data-correct="true">3.5</button>
+              <button class="option" type="button">6</button>
+              <button class="option" type="button">21</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(12)">← Independence</button>
+          <button class="btn primary" type="button" onclick="showLesson(14)">Next: Expectation &amp; Variance →</button>
+        </div>
+      </section>
+
+      <section class="lesson" id="lesson-14">
+        <div class="lesson-tag">Lesson 15 · Measuring Fluctuations</div>
+        <h1>Expectation, Variance &amp; Fluctuations</h1>
+        <p class="lesson-intro">Expectation locates the average value. Variance answers the next question: how widely do the possible values fluctuate around that average?</p>
+
+        <article class="card">
+          <h2>Learning objectives</h2>
+          <p>By the end of this lesson, you will be able to:</p>
+          <ul>
+            <li>Review and calculate expected value</li>
+            <li>Explain why averages do not describe spread</li>
+            <li>Calculate variance by definition and by shortcut</li>
+            <li>Interpret standard deviation</li>
+            <li>Connect variance with physical fluctuations</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>⚖️ 1. Review: expected value</h2>
+          <div class="math-line">E[f] = ∑<sub>x∈X</sub> f(x)p(x)</div>
+          <div class="code-block">X = {1,2,3}
+p(1)=0.2, p(2)=0.5, p(3)=0.3
+f(x)=x
+
+E[f] = 1(0.2)+2(0.5)+3(0.3)
+     = 2.1</div>
+          <p>The expected value gives the probability-weighted center.</p>
+        </article>
+
+        <article class="card">
+          <h2>📏 2. Why the mean is not enough</h2>
+          <p>Two systems can share mean 10 but behave very differently.</p>
+          <div class="compare-grid">
+            <div class="mini-card good">
+              <span class="label">Small spread</span>
+              <code>9, 10, 10, 11</code>
+              <p>Values cluster near 10.</p>
+            </div>
+            <div class="mini-card bad">
+              <span class="label">Large spread</span>
+              <code>1, 10, 10, 19</code>
+              <p>Values reach far from 10.</p>
+            </div>
+          </div>
+          <p>Variance distinguishes these situations.</p>
+        </article>
+
+        <article class="card">
+          <h2>↔️ 3. Deviations from the mean</h2>
+          <p>The deviation of a value is <code>f(x)−E[f]</code>. Deviations can be positive or negative.</p>
+          <div class="code-block">Mean = 10
+
+Value 13: 13−10 = 3
+Value  7:  7−10 = −3</div>
+          <p>Averaging raw deviations always produces zero because positive and negative differences cancel. Squaring prevents that cancellation.</p>
+          <div class="math-line">(f − E[f])²</div>
+        </article>
+
+        <article class="card">
+          <h2>📊 4. Variance definition</h2>
+          <p>Variance is the expected squared distance from the mean.</p>
+          <div class="math-line">Var(f) = E[(f − E[f])²]</div>
+          <div class="note"><p><strong>Interpretation:</strong> expectation asks “where is the center?” Variance asks “how spread out are the values?”</p></div>
+        </article>
+
+        <article class="card">
+          <h2>🧮 5. Calculate variance step by step</h2>
+          <p>Let <code>X={1,2,3}</code>, each with probability <code>1/3</code>, and <code>f(x)=x</code>.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>f(x)</th><th>Deviation from E[f]=2</th><th>Squared deviation</th><th>Weighted value</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">1</td><td class="mono">−1</td><td class="mono">1</td><td class="mono">1/3</td></tr>
+                <tr><td class="mono">2</td><td class="mono">0</td><td class="mono">0</td><td class="mono">0</td></tr>
+                <tr><td class="mono">3</td><td class="mono">1</td><td class="mono">1</td><td class="mono">1/3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="math-line">Var(f) = 1/3 + 0 + 1/3 = 2/3</div>
+        </article>
+
+        <article class="card">
+          <h2>📐 6. Standard deviation</h2>
+          <div class="math-line">σ<sub>f</sub> = √Var(f)</div>
+          <div class="code-block">σf = √(2/3)
+   ≈ 0.816</div>
+          <p>Variance uses squared units; standard deviation returns to the original units and is often easier to interpret.</p>
+        </article>
+
+        <article class="card">
+          <h2>⚡ 7. Variance shortcut</h2>
+          <div class="math-line">Var(f) = E[f²] − E[f]²</div>
+          <p>This follows by expanding <code>(f−E[f])²</code> and using linearity of expectation.</p>
+          <div class="code-block">E[f] = 2
+E[f²] = (1²+2²+3²)/3 = 14/3
+
+Var(f) = 14/3 − 2²
+       = 14/3 − 12/3
+       = 2/3</div>
+          <p>The shortcut and definition give the same answer.</p>
+        </article>
+
+        <article class="card">
+          <h2>0️⃣ 8. Zero variance</h2>
+          <p>If <code>f(x)=5</code> for every outcome, then every value equals its mean and every deviation is zero.</p>
+          <div class="math-line">Constant function ⇒ Var(f) = 0</div>
+          <p>Zero variance means no uncertainty in the value of f.</p>
+        </article>
+
+        <article class="card">
+          <h2>⚛️ 9. Physical interpretation</h2>
+          <p>If f represents a system’s energy, then:</p>
+          <div class="compare-grid">
+            <div class="mini-card">
+              <span class="label">Expectation</span>
+              <code>E[f]</code>
+              <p>Average energy.</p>
+            </div>
+            <div class="mini-card">
+              <span class="label">Variance</span>
+              <code>Var(f)</code>
+              <p>Energy fluctuation around the average.</p>
+            </div>
+          </div>
+          <p>Classical probability develops these ideas before quantum theory introduces analogous structures for observables and measurement.</p>
+        </article>
+
+        <article class="card">
+          <h2>🔋 10. Energy example</h2>
+          <div class="code-block">Energy values: 10, 20, 30
+Probabilities:  0.2, 0.5, 0.3
+
+E[E] = 10(0.2)+20(0.5)+30(0.3)
+     = 21
+
+E[E²] = 100(0.2)+400(0.5)+900(0.3)
+      = 490
+
+Var(E) = 490−21² = 49
+σE = √49 = 7</div>
+          <div class="math-line">Average energy = 21, standard deviation = 7</div>
+        </article>
+
+        <article class="card">
+          <h2>🌙 11. The complete structure</h2>
+          <div class="code-block">States:          x ∈ X
+Probabilities:   p : X → [0,1]
+Quantity:        f : X → ℝ
+Spectrum:        σ(f) = {f(x) | x ∈ X}
+Average:         E[f] = Σ f(x)p(x)
+Fluctuation:     Var(f) = E[(f−E[f])²]
+Typical spread:  σf = √Var(f)</div>
+        </article>
+
+        <article class="card">
+          <h2>📝 Worked practice</h2>
+          <p>Let probabilities be 0.2, 0.5, 0.3 and values be 10, 20, 30.</p>
+          <div class="code-block">E[f] = 21
+E[f²] = 490
+Var(f) = 490−21² = 49
+σf = √49 = 7</div>
+        </article>
+
+        <article class="card">
+          <h2>🎲 Fair-die results</h2>
+          <div class="code-block">E[f] = 7/2 = 3.5
+E[f²] = 91/6 ≈ 15.167
+Var(f) = 91/6 − (7/2)²
+       = 35/12 ≈ 2.917
+σf = √(35/12) ≈ 1.708</div>
+        </article>
+
+        <article class="card">
+          <h2>📌 Formula summary</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Concept</th><th>Formula</th></tr></thead>
+              <tbody>
+                <tr><td>Expectation</td><td class="mono">E[f]=Σ f(x)p(x)</td></tr>
+                <tr><td>Variance definition</td><td class="mono">Var(f)=E[(f−E[f])²]</td></tr>
+                <tr><td>Variance shortcut</td><td class="mono">Var(f)=E[f²]−E[f]²</td></tr>
+                <tr><td>Standard deviation</td><td class="mono">σf=√Var(f)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="exercise-label">Mini quiz · 15 of 15</div>
+        <div class="exercise">
+          <div class="exercise-head"><span>Fair die · f(x)=x</span><span>Choose one</span></div>
+          <div class="exercise-body" data-quiz>
+            <p>What is the variance of f?</p>
+            <div class="choice-grid">
+              <button class="option" type="button">7/2</button>
+              <button class="option" type="button">91/6</button>
+              <button class="option" type="button" data-correct="true">35/12</button>
+              <button class="option" type="button">49</button>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <article class="card">
+          <h2>Next: Moments and Observables</h2>
+          <p>Next you can study <code>E[f²]</code>, <code>E[f³]</code>, and higher moments, then connect random variables to observable physical quantities.</p>
+        </article>
+
+        <div class="lesson-nav">
+          <button class="btn" type="button" onclick="showLesson(13)">← Random Variables</button>
           <button class="btn primary" type="button" onclick="showLesson(0)">Review from the start ↻</button>
         </div>
       </section>
